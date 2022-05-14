@@ -1,3 +1,11 @@
+<?php
+    require_once 'config.php';
+    $sql = "SELECT * FROM `phong_ban`";
+    $result = mysqli_query($connect,$sql);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,6 +19,15 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+        <style>
+            a {
+                text-decoration: none;
+                list-style-type: none;
+                color: black;
+            }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -44,23 +61,23 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <a class="nav-link" href="./manage-account.html">
+                            <a class="nav-link" href="./manage-account.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
                             </a>
-                            <a class="nav-link" href="./manage-department.html">
+                            <a class="nav-link" href="./manage-department.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-employee.html">
+                            <a class="nav-link" href="./manage-employee.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.html">
+                            <a class="nav-link" href="./report.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
                             </a>
@@ -72,24 +89,45 @@
                 </nav>
             </div>
             
-            <div id="layoutSidenav_content">
-                <h1 class="mt-4">Thống kê báo cáo</h1>
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">
-                                <a href="" style="text-decoration: none; color: white;">Thống kê theo tháng</a> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">
-                                <a href="" style="text-decoration: none; color: white;">Xuất file excel</a>
-                            </div>
-                        </div>
-                    </div>
+            <div id="layoutSidenav_content" style="margin-left: 30px;">
+                <h1 class="mt-4" style="text-align: center;">Quản lý phòng ban</h1>
+                <button style="max-width:100px;"><a href="./create-department.php">Thêm mới</a></button>
+                <div class="card-body">
+                    <form action = "" method="get">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Mã phòng ban</th>
+                                    <th>Tên phòng ban</th>
+                                    <th>Mã trưởng phòng</th>
+                                    <th>Số điện thoại</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    while($row = mysqli_fetch_assoc($result)) {
+                                ?>   
+                                    <tr>
+                                        <td><?php  echo $row['Ma_Phong_Ban'];  ?></td>
+                                        <td><?php  echo $row['Ten_Phong_Ban'];  ?></td>
+                                        <td><?php  echo $row['Ma_Truong_Phong'];  ?></td>
+                                        <td><?php  echo $row['So_Dien_Thoai_Phong'];  ?></td>
+                                        
+                                        <td>
+                                        <!--  -->
+                                        <a href="update-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Sửa </a>
+                                        <a onclick="confirm('Bạn có đồng ý xóa phòng ban này không ?')" href="delete-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Xóa </a>
+                                        </td>
+                                    </tr>
+                                <?php }
+
+                                ?>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
+                <hr>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div style="display: block; text-align: center;">
