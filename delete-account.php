@@ -10,6 +10,7 @@
     
 
     if($result) {
+        
         header("location:manage-account.php");
 
     }else{ 

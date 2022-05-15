@@ -117,7 +117,7 @@
                                         <td>
                                         <!--  -->
                                         <a href="update-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Sửa </a>
-                                        <a onclick="confirm('Bạn có đồng ý xóa phòng ban này không ?')" href="delete-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Xóa </a>
+                                        <a id="delete_a" onclick="getConfirm()" href="delete-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Xóa </a>
                                         </td>
                                     </tr>
                                 <?php }
@@ -145,5 +145,16 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            function getConfirm() {
+                var a = document.getElementById("delete_a");
+                
+                if(confirm("Bạn có muốn xóa phòng ban này không ?") == false) {
+                    a.href ="";
+                } else {
+                    
+                }
+            }
+        </script>
     </body>
 </html>

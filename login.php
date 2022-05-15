@@ -1,3 +1,33 @@
+<?php
+    require_once 'config.php';
+    $error = "";
+    if(isset($_POST['submit'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+    
+        $sql = "SELECT * FROM tai_khoan where ten_dang_nhap = '$username' and mat_khau = '$password' ";
+    
+       
+        $result = mysqli_query($connect,$sql);
+
+        
+        if(mysqli_num_rows($result) > 0) {
+            
+            header("Location:index.php");
+        }else{
+            $error = "Email hoặc số di động bạn nhập không kết nối với tài khoản nào";
+            
+        }
+    }
+       
+    
+    
+        
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +36,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - SB Admin</title>
+        <title>Đăng nhập</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -20,30 +50,34 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <form action = "" method="post">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
+                                                <input class="form-control" name="username" type="text" placeholder="name@example.com" />
+                                                <label for="inputEmail">Tên đăng nhập</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
+                                                <input class="form-control" name="password" type="password" placeholder="Password" />
+                                                <label for="inputPassword">Mật khẩu</label>
                                             </div>
                                             <div class="form-check mb-3">
-                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                                                <input class="form-check-input" name="RememberPassword" type="checkbox" value="" />
+                                                <label class="form-check-label" for="RememberPassword">Nhớ mật khẩu</label>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <span><?php  echo $error;  ?></span>
                                             </div>
                                             <div>
-                                                <a style="display: block; height: 45px; text-align: center;" class="btn btn-primary" href="index.html">Login</a>
+                                                
+                                                <input style="width:100%; height: 45px; text-align: center;" class="btn btn-primary" type="submit" name="submit" value="Login">
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
+                                                <a class="small" href="password.php">Quên mật khẩu?</a>
                                                 
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="register.php">Bạn chưa có tài khoản? Đăng ký!</a></div>
                                     </div>
                                 </div>
                             </div>

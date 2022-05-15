@@ -97,7 +97,7 @@
                     
                     
                     <div class="card-body">
-                        <form action = "" method="get">
+                        <form action = "" method="GET">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
@@ -123,7 +123,7 @@
                                         <td>
                                             
                                             <a href="update-account.php?id=<?php echo $row['id']; ?>">Sửa </a>
-                                            <a  onclick="confirm('Bạn có đồng ý xóa tài khoản này không ?')" href="delete-account.php?id=<?php echo $row['id']; ?>">Xóa </a>
+                                            <a id="delete_a" onclick="getConfirm()" href="delete-account.php?id=<?php echo $row['id']; ?>">Xóa </a>
                                         </td>
                                     </tr>
                                     <?php }
@@ -153,5 +153,16 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            function getConfirm() {
+                var a = document.getElementById("delete_a");
+                
+                if(confirm("Bạn có muốn xóa tài khoản này không ?") == false) {
+                    a.href ="";
+                } else {
+                    
+                }
+            }
+        </script>
     </body>
 </html>

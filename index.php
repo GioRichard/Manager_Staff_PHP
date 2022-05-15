@@ -36,7 +36,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="login.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
