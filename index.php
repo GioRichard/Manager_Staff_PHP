@@ -1,4 +1,12 @@
+<?php
+    session_start();
 
+    
+    if(!isset($_SESSION['username'])) {
+        header("location:login.php");
+    }
+
+?>
 
 
 <!DOCTYPE html>
@@ -17,8 +25,8 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">
-                <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo.png" alt="">    
+            <a class="navbar-brand ps-3" href="index.php">
+                <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
@@ -34,9 +42,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="login.php">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -76,7 +84,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Trang chủ</h1>
+                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Trang chủ</h1>
                         
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -84,7 +92,7 @@
                                     <div class="card-body">Người dùng</div>
                                     
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Chi tiết</a>
+                                        <a class="small text-white stretched-link" href="./manage-account.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -93,7 +101,7 @@
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Phòng ban</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Chi tiết</a>
+                                        <a class="small text-white stretched-link" href="./manage-department.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -102,7 +110,7 @@
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">Nhân viên</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Chi tiết</a>
+                                        <a class="small text-white stretched-link" href="./manage-employee.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -112,32 +120,14 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Thống kê</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Chi tiết</a>
+                                        <a class="small text-white stretched-link" href="./report.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                            <tr>
-                                <th>Mã nhân viên</th>
-                                <th>Tên nhân viên</th>
-                                <th>Ngày sinh</th>
-                                <th>Địa chỉ</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Giới tính</th>
-                                <th>Mã chức vụ</th>
-                                <th>Mã phòng ban</th>
-                                <th>Mã luong cơ bản</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        
-                        
-                    </table>
+                    
                 </div>
                         
                     </div>

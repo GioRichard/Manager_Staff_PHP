@@ -1,3 +1,11 @@
+<?php
+    require_once 'config.php';
+    $sql = "SELECT * FROM `phong_ban`";
+    $result = mysqli_query($connect,$sql);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,14 +19,21 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+        <style>
+            a {
+                text-decoration: none;
+                list-style-type: none;
+                
+            }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">
-                <img class="header-logo" src="./assets/img/Logo1.png" alt="">   
+                <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
@@ -34,9 +49,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -46,23 +61,23 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <a class="nav-link" href="./manage-account.html">
+                            <!-- <a class="nav-link" href="./manage-account.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
-                            </a>
-                            <a class="nav-link" href="./manage-department.html">
+                            </a> -->
+                            <a class="nav-link" href="./manage-department-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-employee.html">
+                            <a class="nav-link" href="./manage-employee-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.html">
+                            <a class="nav-link" href="./report-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
                             </a>
@@ -74,61 +89,43 @@
                 </nav>
             </div>
             
-            <div id="layoutSidenav_content">
-                
-                <div class="form-table">
-                <h1 class="mt-4 h1-title">Quản lý phòng ban</h1>
-                <form action="" method="push">
-                    <div class="form-group">
-                        <label class="name-label" for="name-department">Tên phòng ban</label>
-                        <input class="name-input" type="text" name="name-department"> <br>
-                    </div>
-                    <div class="form-group">
-                        <label class="name-label" for="id-leader">Mã trưởng phòng</label>
-                        <input class="name-input" type="text" name="id-leader"> <br>
-                    </div>
-                    <div class="form-group">
-                        <label class="name-label" for="phone-numbe-department">Số điện thoại</label>
-                        <input class="name-input" type="text" name="phone-numbe-department"> <br>
-                    </div>
-                    <button class="btn btn-primary btn-new" type="button">Thêm mới</button>
-                </form>
-                </div>
-
+            <div id="layoutSidenav_content" style="margin-left: 30px;">
+                <h1 class="mt-4" style="text-align: center;">Quản lý phòng ban</h1>
+                <button style="max-width:100px;"><a href="./create-department.php">Thêm mới</a></button>
                 <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                            <tr>
-                                <th>Mã phòng ban</th>
-                                <th>Tên phòng ban</th>
-                                <th>Mã trưởng phòng</th>
-                                <th>Số điện thoại</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Mã phòng ban</th>
-                                <th>Tên phòng ban</th>
-                                <th>Mã trưởng phòng</th>
-                                <th>Số điện thoại</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td class="name-td">
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-pencil"></i></button>
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                           
-                        </tbody>
-                    </table>
+                    <form action = "" method="get">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Mã phòng ban</th>
+                                    <th>Tên phòng ban</th>
+                                    <th>Mã trưởng phòng</th>
+                                    <th>Số điện thoại</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    while($row = mysqli_fetch_assoc($result)) {
+                                ?>   
+                                    <tr>
+                                        <td><?php  echo $row['Ma_Phong_Ban'];  ?></td>
+                                        <td><?php  echo $row['Ten_Phong_Ban'];  ?></td>
+                                        <td><?php  echo $row['Ma_Truong_Phong'];  ?></td>
+                                        <td><?php  echo $row['So_Dien_Thoai_Phong'];  ?></td>
+                                        
+                                        <td>
+                                        <!--  -->
+                                        <a href="update-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Sửa </a>
+                                        <a id="delete_a" onclick="getConfirm()" href="delete-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Xóa </a>
+                                        </td>
+                                    </tr>
+                                <?php }
+
+                                ?>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
                 <hr>
                 <footer class="py-4 bg-light mt-auto">
@@ -148,5 +145,16 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            function getConfirm() {
+                var a = document.getElementById("delete_a");
+                
+                if(confirm("Bạn có muốn xóa phòng ban này không ?") == false) {
+                    a.href ="";
+                } else {
+                    
+                }
+            }
+        </script>
     </body>
 </html>

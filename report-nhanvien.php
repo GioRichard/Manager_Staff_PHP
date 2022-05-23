@@ -11,13 +11,12 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">
-                <img class="header-logo" src="./assets/img/Logo1.png" alt="">    
+                <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
@@ -33,9 +32,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./login.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -45,23 +44,23 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <a class="nav-link" href="./manage-account.html">
+                            <!-- <a class="nav-link" href="./manage-account.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
-                            </a>
-                            <a class="nav-link" href="./manage-department.html">
+                            </a> -->
+                            <a class="nav-link" href="./manage-department-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-employee.html">
+                            <a class="nav-link" href="./manage-employee-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.html">
+                            <a class="nav-link" href="./report-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
                             </a>
@@ -74,74 +73,23 @@
             </div>
             
             <div id="layoutSidenav_content">
-                <div class="form-table">
-                    <h1 class="mt-4 h1-title">Quản lý tài khoản</h1>
-                    <form action="" method="push">
-                        <div class="form-group">
-                            <label class="name-label" for="username">Tên đăng nhập</label>
-                            <input class="name-input" placeholder="anv" type="text" name="username"> <br>
+                <h1 class="mt-4">Thống kê báo cáo</h1>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">
+                                <a href="" style="text-decoration: none; color: white;">Thống kê theo tháng</a> 
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="name-label" for="password">Mật khẩu</label>
-                            <input class="name-input" placeholder="anv" type="password" name="password"> <br>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                            <div class="card-body">
+                                <a href="" style="text-decoration: none; color: white;">Xuất file excel</a>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="name-label" for="name">Tên người dùng</label>
-                            <input class="name-input" placeholder="anv" type="text" name="name"> <br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="avatar">Ảnh đại diện</label>
-                            <input class="file-input" type="file" name="avatar"> <br>
-                        </div>
-                        <button class="btn btn-primary btn-new" type="button">Thêm mới</button>
-                    </form>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                            <tr>
-                                <th>Tên đăng nhập</th>
-                                <th>Mật khẩu</th>
-                                <th>Tên người dùng</th>
-                                <th>Ảnh đại diện</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Tên đăng nhập</th>
-                                <th>Mật khẩu</th>
-                                <th>Tên người dùng</th>
-                                <th>Ảnh đại diện</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td class="name-td">
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-pencil"></i></button>
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td class="name-td">
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-pencil"></i></button>
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div style="display: block; text-align: center;">

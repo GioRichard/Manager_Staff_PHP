@@ -1,30 +1,76 @@
 <?php
     require_once 'config.php';
     $error = "";
+    
+
+    session_start();
+
+    
+    $usernameErr = "";
+    $passwordErr = "";
+    
+    if(isset($_SESSION['username'])) {
+        header("location:index.php");
+    }
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        if(empty($username)) {
+            $usernameErr = "Tên đăng nhập không được để trống ";
+        }else{
+            if(!preg_match("/^[a-zA-Z0-9]*$/",$username)) {
+                $usernameErr = "Không được nhập ký tự đặc biệt ";
+            }
+        }
+        //^: neo vào đầu chuỗi
+        // \S*: bất kỳ bộ ký tự nào
+        // (?=\S{8,}): có độ dài ít nhất 8
+        // (?=\S*[a-z]): chứa ít nhất một chữ cái viết thường
+        // (?=\S*[A-Z]): và ít nhất một chữ cái viết hoa
+        // (?=\S*[\d]): và ít nhất một số
+        // $: neo vào cuối chuỗi
+        if(empty($password)) {
+            $passwordErr = "Mật không không được để trống ";
+        }else {
+            if(!preg_match("$^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$",$password)) {
+                $passwordErr = "Mật khẩu chưa đúng định dạng";
+            }
+        }
+    }
+    
     if(isset($_POST['submit'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-    
-        $sql = "SELECT * FROM tai_khoan where ten_dang_nhap = '$username' and mat_khau = '$password' ";
-    
-       
-        $result = mysqli_query($connect,$sql);
 
         
-        if(mysqli_num_rows($result) > 0) {
+        $error = "";
+        $sqlAdmin = "SELECT * FROM `tbladmin` where username = '$username' and password = '$password'";
+        $resultAdmin = mysqli_query($connect,$sqlAdmin);
+
+        if(mysqli_num_rows($resultAdmin) > 0 ) {
+            $_SESSION['username'] = $username;
+            header("location:index.php");
+        }else {
+            //$error =  "Tài khoản hoặc mật khẩu sai";
+            $sql = "SELECT * FROM tai_khoan where ten_dang_nhap = '$username' and mat_khau = '$password' ";
+    
+       
+            $result = mysqli_query($connect,$sql);
+
             
-            header("Location:index.php");
-        }else{
-            $error = "Email hoặc số di động bạn nhập không kết nối với tài khoản nào";
-            
+            if(mysqli_num_rows($result) > 0) {
+                $_SESSION['ten_dang_nhap']= $username ;
+                header("Location:nhanvien.php");
+            }else{
+                $error = "Email hoặc số di động bạn nhập không kết nối với tài khoản nào";
+                
+            }
         }
-    }
-       
-    
-    
         
-
-
+        
+    }
+    
+       
 ?>
 
 
@@ -54,10 +100,14 @@
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" name="username" type="text" placeholder="name@example.com" />
                                                 <label for="inputEmail">Tên đăng nhập</label>
+                                                <span style="color:red"> <?php echo $usernameErr; ?></span>
+                                                
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" name="password" type="password" placeholder="Password" />
                                                 <label for="inputPassword">Mật khẩu</label>
+                                                <span style="color:red"> <?php echo $passwordErr; ?></span>
+                                                
                                             </div>
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" name="RememberPassword" type="checkbox" value="" />
@@ -71,7 +121,7 @@
                                                 <input style="width:100%; height: 45px; text-align: center;" class="btn btn-primary" type="submit" name="submit" value="Login">
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.php">Quên mật khẩu?</a>
+                                                <a class="small" href="">Quên mật khẩu?</a>
                                                 
                                             </div>
                                         </form>

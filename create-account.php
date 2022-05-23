@@ -1,18 +1,52 @@
 <?php
     require_once 'config.php';
+    $usernameErr = $passwordErr = $fullnameErr = $imgErr
+    = $username =$password = $fullname = $img = "";
 
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+         // Xử lí validate form
+         $username = $_POST['username'];
+         $password = $_POST['password'];
+         $fullname = $_POST['fullname'];
+         $img = $_POST['img'];
+        // username
+        if(empty($username)) {
+            $usernameErr = "Tên đăng nhập không được bỏ trống !";
+            
+        }else{
+            $username = test($username);
+            if(!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+                $usernameErr = "Tên đăng nhập gồm chữ và số ";
+            }
+        }
+
+
+    }
     if(isset($_POST['submit'])) {
-        //$id = $_POST['id'];
+
+
+      
+
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
         $img = $_POST['img'];
 
-
+       
+ 
         $sql = "INSERT INTO `tai_khoan` (`id`, `ten_dang_nhap`, `mat_khau`, `ten_nguoi_dung`, `anh_dai_dien`) VALUES (NULL, '$username', '$password', '$fullname', '$img')";
 
         $result = mysqli_query($connect, $sql);
+
         header("Location:manage-account.php");
+    }
+
+    // Hàm kiểm tra
+    function test($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
     
 
@@ -40,11 +74,11 @@
 </head>
 <body>
     <h2 class="mt-4">Thêm mới tài khoản</h2>
-    <form action="" method="post" enctype="multipart/form">
+    <form action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form">
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
             <input type="text" class="form-control" name="username" placeholder=""  >
-            
+            <span > <?php echo $usernameErr;?></span>
         </div>
         <div class="mb-3">
             <label for="Mật khẩu" class="form-label">Mật khẩu</label>

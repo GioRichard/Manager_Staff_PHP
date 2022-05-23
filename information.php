@@ -1,13 +1,30 @@
 <?php
-
     require_once 'config.php';
+    session_start();
+    $msg = "";
+    if(isset($_POST['submit']))  {
+        $name = $_SESSION['username'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $fullname = $_POST['fullname'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
 
-    $sql =  "SELECT * FROM `nhan_vien`";
+        $sql = "UPDATE tbladmin SET username= '$username', password = '$password', adminName = '$fullname',phone= '$phone', email = '$email' where username = '$name'";
 
-    $result = mysqli_query($connect,$sql);
+
+        $result = mysqli_query($connect, $sql);
+    
+        if($result) {
+            $msg = "Tài khoản admin đã được cập nhật";
+        }else{
+            $msg = "Tài khoản admin chưa được cập nhật";
+        }
+
+    }
+    
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -22,20 +39,17 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
-            
-            a {
-                text-decoration: none;
-                list-style-type: none;
-                
+            .container {
+                margin: 50px auto ;
+                max-width: 1000px;
             }
         </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -53,7 +67,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="information.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -91,67 +105,50 @@
                     </div>
                 </nav>
             </div>
-            
-            <div id="layoutSidenav_content" style="margin-left: 30px;">
-                <h1 class="mt-4" style="text-align: center;">Quản lý nhân viên</h1>
+            <div class="container">
+                <h2 class="mt-4">Thông tin tài khoản</h2>
+                <span style="color:red"><?php echo $msg;  ?></span>
+                <form action="" method="post" enctype="multipart/form">
 
-                
-                <button style="max-width:100px;"><a href="./create-employee.php">Thêm mới</a></button>
+<?php
 
-                <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                            <tr>
-                                <th>Mã nhân viên</th>
-                                <th>Tên nhân viên</th>
-                                <th>Ngày sinh</th>
-                                <th>Địa chỉ</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Giới tính</th>
-                                <th>Mã chức vụ</th>
-                                <th>Mã phòng ban</th>
-                                <th>Mã luong cơ bản</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                    <?php
-                                        while($row = mysqli_fetch_assoc($result)) {?>
+    $name = $_SESSION['username'];
+    $sql = "SELECT * FROM `tbladmin` where `username` = '$name'";
+    $result = mysqli_query($connect, $sql);
 
-                                    
-                                    <tr>
-                                        <td><?php  echo $row['Ma_Nhan_Vien'];  ?></td>
-                                        <td><?php  echo $row['Ten_Nhan_Vien'];  ?></td>
-                                        <td><?php  echo $row['Ngay_Sinh'];  ?></td>
-                                        <td><?php  echo $row['Dia_Chi'];  ?></td>
-                                        <td><?php  echo $row['Email'];  ?></td>
-                                        <td><?php  echo $row['So_Dien_Thoai'];  ?></td>
-                                        <td><?php  echo $row['Gioi_Tinh'];  ?></td>
-                                        <td><?php  echo $row['Ma_Chuc_Vu'];  ?></td>
-                                        <td><?php  echo $row['Ma_Phong_Ban'];  ?></td>
-                                        <td><?php  echo $row['Luong_Co_Ban'];  ?></td>
-                                        <td>
-                                            
-                                            <a href="update-employee.php?id=<?php echo $row['Ma_Nhan_Vien']; ?>">Sửa </a>
-                                            <a id="delete_a" onclick="getConfirm()" href="delete-employee.php?id=<?php echo $row['Ma_Nhan_Vien']; ?>">Xóa </a>
-                                        </td>
-                                    </tr>
-                                <?php }
-                                ?>
-                            </tbody>
+    while ($row = mysqli_fetch_assoc($result)) {
+     
+    
+?>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" name="username" placeholder="" value="<?php echo $row['username']; ?>">
                         
-                    </table>
-                </div>
-                <hr>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div style="display: block; text-align: center;">
-                                <a style="text-decoration: none;" href="#">Chính sách bảo mật</a>
-                                <span style="display: block; text-align: center;">Bản quyền bởi công ty DKP</span>
-                        </div>
                     </div>
-                </footer>
+                    <div class="mb-3">
+                        <label for="Mật khẩu" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" name="password"  value="<?php echo $row['password']; ?>">
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Tên người dùng</label>
+                        <input type="text" class="form-control"   name="fullname" placeholder="" value="<?php echo $row['adminName']; ?>">
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" name="email"    value="<?php echo $row['email']; ?>">
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" name="phone"    value="<?php echo $row['phone']; ?>">
+                        
+                    </div>
+                    <?php   } ?>
+                    <button type="submit" name="submit" class="btn btn-primary">Cập nhật</button>
+                    
+                </form>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -161,16 +158,5 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <script>
-            function getConfirm() {
-                var a = document.getElementById("delete_a");
-                
-                if(confirm("Bạn có muốn xóa nhân viên này không ?") == false) {
-                    a.href ="";
-                } else {
-                    
-                }
-            }
-        </script>
     </body>
 </html>

@@ -1,3 +1,15 @@
+<?php
+
+    require_once 'config.php';
+
+    $sql =  "SELECT * FROM `nhan_vien`";
+
+    $result = mysqli_query($connect,$sql);
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,12 +23,20 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            
+            a {
+                text-decoration: none;
+                list-style-type: none;
+                
+            }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">
-                <img class="header-logo" src="./assets/img/Logo1.png" alt=""> 
+                <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
@@ -32,9 +52,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -44,23 +64,23 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <a class="nav-link" href="./manage-account.html">
+                            <!-- <a class="nav-link" href="./manage-account.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
-                            </a>
-                            <a class="nav-link" href="./manage-department.html">
+                            </a> -->
+                            <a class="nav-link" href="./manage-department-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-employee.html">
+                            <a class="nav-link" href="./manage-employee-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.html">
+                            <a class="nav-link" href="./report-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
                             </a>
@@ -72,86 +92,55 @@
                 </nav>
             </div>
             
-            <div id="layoutSidenav_content">
-                <div class="form-table form-table-epl">
-                    <h1 class="mt-4 h1-title">Quản lý nhân viên</h1>
-                    <form action="" method="push">
-                       
-                        <div class="form-group">
-                            <label class="name-label" for="employee-name">Tên nhân viên</label>
-                            <input type="text" class="name-input" name="employee-name"><br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="date-birth">Ngày sinh</label>
-                            <input type="text" class="name-input" name="date-birth"> <br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="address">Địa chỉ</label>
-                            <input type="text" class="name-input" name="address"> <br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="email">Email</label>
-                            <input type="email" class="name-input" name="email"> <br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="phone-number">Số điện thoại</label>
-                            <input type="text" class="name-input" name="phone-number"> <br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="gender">Giới tính</label>
-                            <input type="text" class="name-input" name="gender"> <br>
-                        </div>
-                        <div class="form-group">
-                            <label class="name-label" for="basic-salary">Lương cơ bản</label>
-                            <input type="text" class="name-input" name="basic-salary"> <br>
-                        </div>
-                        <button class="btn btn-primary btn-new" type="button">Thêm mới</button>
+            <div id="layoutSidenav_content" style="margin-left: 30px;">
+                <h1 class="mt-4" style="text-align: center;">Quản lý nhân viên</h1>
 
-                    </form>
-                </div>
+                
+                <button style="max-width:100px;"><a href="./create-employee.php">Thêm mới</a></button>
+
                 <div class="card-body">
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
-                                <th>Mã phòng ban</th>
-                                <th>Tên phòng ban</th>
-                                <th>Mã trưởng phòng</th>
+                                <th>Mã nhân viên</th>
+                                <th>Tên nhân viên</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Email</th>
                                 <th>Số điện thoại</th>
-                                <th>Chức năng</th>
+                                <th>Giới tính</th>
+                                <th>Mã chức vụ</th>
+                                <th>Mã phòng ban</th>
+                                <th>Mã luong cơ bản</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Mã phòng ban</th>
-                                <th>Tên phòng ban</th>
-                                <th>Mã trưởng phòng</th>
-                                <th>Số điện thoại</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td class="name-td">
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-pencil"></i></button>
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td class="name-td">
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-pencil"></i></button>
-                                    <button type="button" class="btn-icon" ><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            
-                          
+                                    <?php
+                                        while($row = mysqli_fetch_assoc($result)) {?>
+
+                                    
+                                    <tr>
+                                        <td><?php  echo $row['Ma_Nhan_Vien'];  ?></td>
+                                        <td><?php  echo $row['Ten_Nhan_Vien'];  ?></td>
+                                        <td><?php  echo $row['Ngay_Sinh'];  ?></td>
+                                        <td><?php  echo $row['Dia_Chi'];  ?></td>
+                                        <td><?php  echo $row['Email'];  ?></td>
+                                        <td><?php  echo $row['So_Dien_Thoai'];  ?></td>
+                                        <td><?php  echo $row['Gioi_Tinh'];  ?></td>
+                                        <td><?php  echo $row['Ma_Chuc_Vu'];  ?></td>
+                                        <td><?php  echo $row['Ma_Phong_Ban'];  ?></td>
+                                        <td><?php  echo $row['Luong_Co_Ban'];  ?></td>
+                                        <td>
+                                            
+                                            <a href="update-employee.php?id=<?php echo $row['Ma_Nhan_Vien']; ?>">Sửa </a>
+                                            <a id="delete_a" onclick="getConfirm()" href="delete-employee.php?id=<?php echo $row['Ma_Nhan_Vien']; ?>">Xóa </a>
+                                        </td>
+                                    </tr>
+                                <?php }
+                                ?>
+                            </tbody>
+                        
                     </table>
                 </div>
                 <hr>
@@ -172,5 +161,16 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            function getConfirm() {
+                var a = document.getElementById("delete_a");
+                
+                if(confirm("Bạn có muốn xóa nhân viên này không ?") == false) {
+                    a.href ="";
+                } else {
+                    
+                }
+            }
+        </script>
     </body>
 </html>

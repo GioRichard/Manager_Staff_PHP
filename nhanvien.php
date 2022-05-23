@@ -1,13 +1,15 @@
 <?php
-
     require_once 'config.php';
+    session_start();
 
-    $sql =  "SELECT * FROM `nhan_vien`";
-
-    $result = mysqli_query($connect,$sql);
+    
+    if(!isset($_SESSION['ten_dang_nhap'])) {
+        header("location:login.php");
+    }
+    
+    
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -22,20 +24,11 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <style>
-            
-            a {
-                text-decoration: none;
-                list-style-type: none;
-                
-            }
-        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -52,8 +45,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./password-nhanvien.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -64,23 +57,23 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <a class="nav-link" href="./manage-account.php">
+                            <!-- <a class="nav-link" href="./manage-account.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
-                            </a>
-                            <a class="nav-link" href="./manage-department.php">
+                            </a> -->
+                            <a class="nav-link" href="./manage-department-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-employee.php">
+                            <a class="nav-link" href="./manage-employee-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.php">
+                            <a class="nav-link" href="./report-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
                             </a>
@@ -91,59 +84,57 @@
                     </div>
                 </nav>
             </div>
-            
-            <div id="layoutSidenav_content" style="margin-left: 30px;">
-                <h1 class="mt-4" style="text-align: center;">Quản lý nhân viên</h1>
-
-                
-                <button style="max-width:100px;"><a href="./create-employee.php">Thêm mới</a></button>
-
-                <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                            <tr>
-                                <th>Mã nhân viên</th>
-                                <th>Tên nhân viên</th>
-                                <th>Ngày sinh</th>
-                                <th>Địa chỉ</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Giới tính</th>
-                                <th>Mã chức vụ</th>
-                                <th>Mã phòng ban</th>
-                                <th>Mã luong cơ bản</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                    <?php
-                                        while($row = mysqli_fetch_assoc($result)) {?>
-
-                                    
-                                    <tr>
-                                        <td><?php  echo $row['Ma_Nhan_Vien'];  ?></td>
-                                        <td><?php  echo $row['Ten_Nhan_Vien'];  ?></td>
-                                        <td><?php  echo $row['Ngay_Sinh'];  ?></td>
-                                        <td><?php  echo $row['Dia_Chi'];  ?></td>
-                                        <td><?php  echo $row['Email'];  ?></td>
-                                        <td><?php  echo $row['So_Dien_Thoai'];  ?></td>
-                                        <td><?php  echo $row['Gioi_Tinh'];  ?></td>
-                                        <td><?php  echo $row['Ma_Chuc_Vu'];  ?></td>
-                                        <td><?php  echo $row['Ma_Phong_Ban'];  ?></td>
-                                        <td><?php  echo $row['Luong_Co_Ban'];  ?></td>
-                                        <td>
-                                            
-                                            <a href="update-employee.php?id=<?php echo $row['Ma_Nhan_Vien']; ?>">Sửa </a>
-                                            <a id="delete_a" onclick="getConfirm()" href="delete-employee.php?id=<?php echo $row['Ma_Nhan_Vien']; ?>">Xóa </a>
-                                        </td>
-                                    </tr>
-                                <?php }
-                                ?>
-                            </tbody>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Trang chủ</h1>
                         
-                    </table>
+                        <div class="row">
+                            <!-- <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Người dùng</div>
+                                    
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="./manage-account.php">Chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">Phòng ban</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="./manage-department-nhanvien.php">Chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">Nhân viên</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="./manage-employee-nhanvien.php">Chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">Thống kê</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="./report-nhanvien.php">Chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                    
                 </div>
-                <hr>
+                        
+                    </div>
+                </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div style="display: block; text-align: center;">
@@ -161,16 +152,5 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <script>
-            function getConfirm() {
-                var a = document.getElementById("delete_a");
-                
-                if(confirm("Bạn có muốn xóa nhân viên này không ?") == false) {
-                    a.href ="";
-                } else {
-                    
-                }
-            }
-        </script>
     </body>
 </html>

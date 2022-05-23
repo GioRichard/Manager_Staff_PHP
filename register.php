@@ -96,7 +96,7 @@
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="">Bạn có tài khoản? Đăng nhập !</a></div>
+                                        <div class="small"><a href="./login.php">Bạn có tài khoản? Đăng nhập !</a></div>
                                     </div>
                                 </div>
                             </div>

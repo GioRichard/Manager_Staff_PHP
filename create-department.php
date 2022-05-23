@@ -1,14 +1,40 @@
 <?php
     require_once 'config.php';
 
+   
+    $tenPhongBanErr =  $maTruongPhongErr = $phoneErr = "";
+    // if($_SERVER["REQUEST_METHOD"] == "POST") {
+    //     if(empty($ten_phong_ban)) {
+    //         $tenPhongBanErr = "Phải nhập tên phòng ban";
+    //     }else {
+    //         if(!preg_match("/^[a-zA-Z]*$/",$ten_phong_ban)) {
+    //             $tenPhongBanErr = "Tên phòng ban không được dùng số hay kí tự đặc biệt";
+    //         }
+    //     }
+    //     if(empty($ma_truong_phong)) {
+    //         $maTruongPhongErr = "Phải nhập mã trưởng phòng";
+    //     }else {
+    //         if(!preg_match("/^[a-zA-Z0-9]*$/",$ma_truong_phong)) {
+    //             $maTruongPhongErr = "Mã trưởng phòng gồm chữ và số  ";
+    //         }
+    //     }
+    //     if(empty($phone)) {
+    //         $phoneErr = "Phải nhập số điện thoại phòng ";
+    //     }else {
+    //         if(!preg_match("/^[0-9]",$phone)) {
+    //             $phoneErr = "Số điện thoại phòng chỉ có chữ số";
+    //         } 
+    //     }
+    //     if($phoneErr != "" || $tenPhongBanErr != "" || $maTruongPhongErr != " ") {
+    //         header("Location:create-department.php");
+    //     } 
+    // }
+
     if(isset($_POST['submit'])) {
-        //$id = $_POST['id'];
-       
         $ten_phong_ban = $_POST['ten_phong_ban'];
         $ma_truong_phong = $_POST['ma_truong_phong'];
         $phone = $_POST['phone'];
-
-
+        //$id = $_POST['id'];
         $sql = "INSERT INTO `phong_ban` (`Ma_Phong_Ban`, `Ten_Phong_Ban`, `Ma_Truong_Phong`, `So_Dien_Thoai_Phong`) 
         VALUES (NULL, '$ten_phong_ban', '$ma_truong_phong', '$phone')";
 

@@ -4,20 +4,20 @@
     session_start();
     $msg = "";
     if(isset($_POST['submit'])) {
-        $name = $_SESSION['username'];
+        $name = $_SESSION['ten_dang_nhap'];
 
         $oldPassword = $_POST['oldPassword'];
         $currentPassword = $_POST['currentPassword'];
         $confirmPassword = $_POST['confirmPassword'];
 
-        $sql = "SELECT * FROM `tbladmin` where `username` = '$name' and `password` = '$oldPassword'";
+        $sql = "SELECT * FROM `tai_khoan` where `ten_dang_nhap` = '$name' and `mat_khau` = '$oldPassword'";
         $result = mysqli_query($connect,$sql);
         $row = mysqli_fetch_array($result);
         
         if($row > 0) {
-            $ret =  mysqli_query($connect,"update tbladmin set password = '$currentPassword'");
+            $ret =  mysqli_query($connect,"update tai_khoan set mat_khau = '$currentPassword'");
             $msg =  "Password changed successfully";
-            header("Location: index.php");
+            header("Location: nhanvien.php");
             
         }else{
             $msg = "Password not changed successfully";
@@ -66,8 +66,8 @@
 
 <?php
     
-    $name = $_SESSION['username'];
-    $sql = "SELECT * FROM tbladmin where username = '$name'";
+    $name = $_SESSION['ten_dang_nhap'];
+    $sql = "SELECT * FROM tai_khoan where ten_dang_nhap = '$name'";
     $result = mysqli_query($connect,$sql);
 
     while($row = mysqli_fetch_assoc($result)) {
