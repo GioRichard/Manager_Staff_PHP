@@ -1,4 +1,5 @@
 <?php
+    require_once 'config.php';
     session_start();
 
     
@@ -6,6 +7,29 @@
         header("location:login.php");
     }
 
+    $sql_account = "SELECT id FROM `tai_khoan`  ";
+    $result_account = mysqli_query($connect,$sql_account);
+
+    $dem_account = mysqli_num_rows($result_account);
+
+    $sql_depart = "SELECT Ma_Phong_Ban FROM `phong_ban`";
+    $result_depart = mysqli_query($connect,$sql_depart);
+
+    $dem_depart = mysqli_num_rows($result_depart);
+
+    $sql_employ = "SELECT Ma_Nhan_Vien FROM `nhan_vien`";
+    $result_employ = mysqli_query($connect,$sql_employ);
+
+    $dem_employ = mysqli_num_rows($result_employ);
+
+
+
+
+
+    
+
+
+    
 ?>
 
 
@@ -21,6 +45,14 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+            .num-account {
+                font-style: bold;
+                font-size: 30px;
+                text-align: right;
+                margin-right: 30px;
+            }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -70,9 +102,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.php">
+                            <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Thống kê báo cáo
+                                Quản lý lương
                             </a>
                         </div>
                     </div>
@@ -89,8 +121,8 @@
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Người dùng</div>
-                                    
+                                    <div  class="card-body" >Người dùng</div>
+                                    <div class="num-account" ><?php echo $dem_account; ?></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="./manage-account.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -100,6 +132,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Phòng ban</div>
+                                    <div class="num-account" ><?php echo $dem_depart; ?></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="./manage-department.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -109,6 +142,7 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body">Nhân viên</div>
+                                    <div class="num-account" ><?php echo $dem_employ; ?></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="./manage-employee.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -118,7 +152,8 @@
                           
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Thống kê</div>
+                                    <div class="card-body">Lương</div>
+                                    <div class="num-account" >0</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="./report.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>

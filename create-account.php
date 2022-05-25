@@ -3,22 +3,65 @@
     $usernameErr = $passwordErr = $fullnameErr = $imgErr
     = $username =$password = $fullname = $img = "";
 
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
          // Xử lí validate form
-         $username = $_POST['username'];
-         $password = $_POST['password'];
-         $fullname = $_POST['fullname'];
-         $img = $_POST['img'];
-        // username
-        if(empty($username)) {
-            $usernameErr = "Tên đăng nhập không được bỏ trống !";
+        //  $username = $_POST['username'];
+        //  $password = $_POST['password'];
+        //  $fullname = $_POST['fullname'];
+        //  $img = $_POST['fileUpload'];
+        // // username
+        // if(empty($username)) {
+        //     $usernameErr = "Tên đăng nhập không được bỏ trống !";
             
-        }else{
-            $username = test($username);
-            if(!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-                $usernameErr = "Tên đăng nhập gồm chữ và số ";
+        // }else{
+        //     $username = test($username);
+        //     if(!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+        //         $usernameErr = "Tên đăng nhập gồm chữ và số ";
+        //     }
+        // }
+
+        // Upload file
+        
+        // echo "<pre>";
+        // print_r($_FILES);
+        // echo "</pre>";
+
+        $error = "";
+        $target_dir = "uploads/";
+        // Tạo đường dẫn file sau khi uploads
+        $target_file = $target_dir.basename($_FILES['fileUpload']['name']);
+        //echo $target_file;
+
+        // Kiểm tra điều kiện uploads 
+        //1. Kiểm tra kích thước file 
+
+        if($_FILES['fileUpload']['size'] > 3145728) {
+            $error['fileUpload'] = "Chỉ được upload file dưới 3mb";
+        }
+        //2. kiểm tra loại file
+        $file_type = pathinfo($_FILES['fileUpload']['name'], PATHINFO_EXTENSION);
+        //echo $file_type;
+       
+        $file_type_allow = array('png','jpeg','jpg','pdf','gif');
+
+        if(!in_array( strtolower($file_type), $file_type_allow)) {
+            $error['fileUpload'] = "Chỉ cho phép upload file ảnh";
+        }
+        // 3. kiểm tra sự tồn tại file 
+        //  if(file_exists($target_file)) {
+        //      $error['fileUpload'] = "File đã tồn tại trong hệ thống";
+        //      header('Location:create-account.php'); 
+        //  }
+        if(empty($error)) { 
+            if(move_uploaded_file($_FILES['fileUpload']['tmp_name'],$target_file)) {
+                echo "Bạn đã upload thành công";
+                $flag = true;
+            }else{
+                echo "Bạn đã upload thất bại";
             }
         }
+        
+
 
 
     }
@@ -30,7 +73,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
-        $img = $_POST['img'];
+        $img = $_FILES['fileUpload']['name'];
 
        
  
@@ -74,7 +117,7 @@
 </head>
 <body>
     <h2 class="mt-4">Thêm mới tài khoản</h2>
-    <form action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form">
+    <form id="form-upload" action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
             <input type="text" class="form-control" name="username" placeholder=""  >
@@ -92,11 +135,14 @@
         </div>
         <div class="mb-3">
             <label for="img" class="form-label">Ảnh đại diện</label>
-            <input type="text" class="form-control" name="img"    >
+            <input type="file" name="fileUpload" value="" id="fileUpload" >
             
         </div>
 
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        
+        
+        
     </form>
 </body>
 </html>

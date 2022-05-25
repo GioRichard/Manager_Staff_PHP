@@ -1,3 +1,16 @@
+<?php
+    require_once 'config.php';
+    session_start();
+
+    
+    if(!isset($_SESSION['username'])) {
+        header("location:login.php");
+    }
+    $sql = "SELECT * FROM `nhan_vien`";
+    $result = mysqli_query($connect,$sql);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -60,9 +73,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.php">
+                            <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Thống kê báo cáo
+                                Quản lý lương
                             </a>
                         </div>
                     </div>
@@ -73,21 +86,58 @@
             </div>
             
             <div id="layoutSidenav_content">
-                <h1 class="mt-4">Thống kê báo cáo</h1>
+                <h1 class="mt-4" style="text-align:center;margin-bottom: 30px">Quản lý lương</h1>
+                
+                    <h4 style="text-align:right;margin-right:50px;">Lương cơ bản: 2.000.000 đồng</h4>
+                    
+                
                 <div class="row">
-                    <div class="col-xl-3 col-md-6">
+                    <!-- <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4">
                             <div class="card-body">
                                 <a href="" style="text-decoration: none; color: white;">Thống kê theo tháng</a> 
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
+                    </div> -->
+                    <!-- <div class="col-xl-3 col-md-6">
                         <div class="card bg-warning text-white mb-4">
                             <div class="card-body">
-                                <a href="" style="text-decoration: none; color: white;">Xuất file excel</a>
+                                <a href="./export.php" style="text-decoration: none; color: white;">Xuất file excel</a>
                             </div>
                         </div>
+                    </div> -->
+                    <div class="card-body">
+                        <form action = "" method="get">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Mã nhân viên</th>
+                                        <th>Tên nhân viên</th>
+                                        <th>Mã lương cơ bản</th>
+                                        <th>Lương thực tế</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <?php
+                                        while($row = mysqli_fetch_assoc($result)) { 
+                                            $salary = $row['Luong_Co_Ban'] * 2000000;
+                                            echo "<tr>
+                                        
+                                            <td>{$row['Ma_Nhan_Vien']}</td>
+                                            <td>{$row['Ten_Nhan_Vien']}</td>
+                                            <td>{$row['Luong_Co_Ban']}</td>
+                                            <td>{$salary}</td>
+                                            
+                                            
+                                        </tr>";
+
+                                        } 
+                                    ?>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
                 <footer class="py-4 bg-light mt-auto">

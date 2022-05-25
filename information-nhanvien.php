@@ -3,7 +3,7 @@
     session_start();
     $msg = "";
     if(isset($_POST['submit']))  {
-        $name = $_SESSION['username'];
+        $name = $_SESSION['ten_dang_nhap '];
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
@@ -66,8 +66,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="password-nhanvien.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -78,26 +78,26 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <a class="nav-link" href="./manage-account.php">
+                            <!-- <a class="nav-link" href="./manage-account.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
-                            </a>
-                            <a class="nav-link" href="./manage-department.php">
+                            </a> -->
+                            <a class="nav-link" href="./manage-department-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-employee.php">
+                            <a class="nav-link" href="./manage-employee-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.php">
+                            <!-- <a class="nav-link" href="./report.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

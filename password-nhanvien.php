@@ -15,7 +15,7 @@
         $row = mysqli_fetch_array($result);
         
         if($row > 0) {
-            $ret =  mysqli_query($connect,"update tai_khoan set mat_khau = '$currentPassword'");
+            $ret =  mysqli_query($connect,"update tai_khoan set mat_khau = '$currentPassword' where `ten_dang_nhap` = '$name'");
             $msg =  "Password changed successfully";
             header("Location: nhanvien.php");
             

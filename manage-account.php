@@ -1,5 +1,11 @@
 <?php
     require_once 'config.php';
+    session_start();
+
+    
+    if(!isset($_SESSION['username'])) {
+        header("location:login.php");
+    }
 
     $sql =  "SELECT * FROM `tai_khoan`";
 
@@ -23,10 +29,13 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <style>
-            a {
+             a {
                 text-decoration: none;
                 list-style-type: none;
-                
+               
+            } 
+            button.btn.btn-outline-primary:hover {
+                color:white;
             }
         </style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -79,9 +88,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.php">
+                            <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Thống kê báo cáo
+                                Quản lý lương
                             </a>
                         </div>
                     </div>
@@ -93,8 +102,12 @@
             
             <div id="layoutSidenav_content" style="margin-left: 30px;">
                     <h1 class="mt-4" style="text-align: center;">Quản lý tài khoản</h1>
-                    
-                    <button style="max-width:100px;"><a style="color:black;"  href="./create-account.php">Thêm mới</a></button>
+                    <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a style="color:black;"  href="./create-account.php">Thêm mới</a></button>
+                        <form method="post" action="export.php">
+                                <input type="submit" name="export" class="btn btn-success" value="Export" />
+                        </form>
+                    </div>
                     
                     
                     <div class="card-body">
@@ -102,7 +115,7 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>Mã tài khoản</th>
                                         <th>Tên đăng nhập</th>
                                         <th>Mật khẩu</th>
                                         <th>Tên người dùng</th>
@@ -111,24 +124,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                        while($row = mysqli_fetch_assoc($result)) {?>
-
+                               <?php
+                                    while($row = mysqli_fetch_assoc($result)) { 
+                                        $accountId = $row['id'];
+                                        echo "<tr>
                                     
-                                    <tr>
-                                        <td><?php  echo $row['id'];  ?></td>
-                                        <td><?php  echo $row['ten_dang_nhap'];  ?></td>
-                                        <td><?php  echo $row['mat_khau'];  ?></td>
-                                        <td><?php  echo $row['ten_nguoi_dung'];  ?></td>
-                                        <td><?php  echo $row['anh_dai_dien'];  ?></td>
+                                        <td>{$row['id']}</td>
+                                        <td>{$row['ten_dang_nhap']}</td>
+                                        <td>{$row['mat_khau']}</td>
+                                        <td>{$row['ten_nguoi_dung']}</td>
+                                        <td><img src='uploads/{$row['anh_dai_dien']}' style='width:100px; height:100px;'></td>
+                                        
                                         <td>
-                                            
-                                            <a href="update-account.php?id=<?php echo $row['id']; ?>">Sửa </a>
-                                            <a id="delete_a" onclick="getConfirm()" href="delete-account.php?id=<?php echo $row['id']; ?>">Xóa </a>
+                                            <div style='display:flex;'>
+                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-account.php?id={$row['id']}' style='text-decoration: none;'>Sửa </a></button>
+                                                <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $accountId)' style='text-decoration: none; color:red;'>Xóa </a></button>
+                                            </div>
                                         </td>
-                                    </tr>
-                                    <?php }
-                                    ?>
+                                    </tr>";
+
+                                    } 
+                                ?>
                                 </tbody>
                                 
                             </table>
@@ -155,14 +171,14 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         <script>
-            function getConfirm() {
-                var a = document.getElementById("delete_a");
-                
-                if(confirm("Bạn có muốn xóa tài khoản này không ?") == false) {
-                    a.href ="";
+            function  getConfirm(aTag, empId) {
+                const conf = confirm('Bạn có muốn xóa tài khoản này không ?');
+                if(!conf) {
+                    aTag.href = '';
                 } else {
-                    
+                    aTag.href = 'delete-account.php?id=' +  empId ;
                 }
+                console.log(aTag);
             }
         </script>
     </body>

@@ -15,7 +15,7 @@
         $row = mysqli_fetch_array($result);
         
         if($row > 0) {
-            $ret =  mysqli_query($connect,"update tbladmin set password = '$currentPassword'");
+            $ret =  mysqli_query($connect,"update tbladmin set password = '$currentPassword' where `username` = '$name'");
             $msg =  "Password changed successfully";
             header("Location: index.php");
             

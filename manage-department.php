@@ -1,5 +1,11 @@
 <?php
     require_once 'config.php';
+    session_start();
+
+    
+    if(!isset($_SESSION['username'])) {
+        header("location:login.php");
+    }
     $sql = "SELECT * FROM `phong_ban`";
     $result = mysqli_query($connect,$sql);
 
@@ -77,9 +83,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report.php">
+                            <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Thống kê báo cáo
+                                Quản lý lương
                             </a>
                         </div>
                     </div>
@@ -91,7 +97,13 @@
             
             <div id="layoutSidenav_content" style="margin-left: 30px;">
                 <h1 class="mt-4" style="text-align: center;">Quản lý phòng ban</h1>
-                <button style="max-width:100px;"><a href="./create-department.php">Thêm mới</a></button>
+                
+                <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a href="./create-department.php">Thêm mới</a></button>
+                        <form method="post" action="export.php">
+                                <input type="submit" name="export-depart" class="btn btn-success" value="Export" />
+                        </form>
+                </div>
                 <div class="card-body">
                     <form action = "" method="get">
                         <table id="datatablesSimple">
@@ -105,23 +117,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 <?php
-                                    while($row = mysqli_fetch_assoc($result)) {
-                                ?>   
-                                    <tr>
-                                        <td><?php  echo $row['Ma_Phong_Ban'];  ?></td>
-                                        <td><?php  echo $row['Ten_Phong_Ban'];  ?></td>
-                                        <td><?php  echo $row['Ma_Truong_Phong'];  ?></td>
-                                        <td><?php  echo $row['So_Dien_Thoai_Phong'];  ?></td>
+                                    while($row = mysqli_fetch_assoc($result)) { 
+                                        $departId = $row['Ma_Phong_Ban'];
+                                        echo "<tr>
+                                    
+                                        <td>{$row['Ma_Phong_Ban']}</td>
+                                        <td>{$row['Ten_Phong_Ban']}</td>
+                                        <td>{$row['Ma_Truong_Phong']}</td>
+                                        <td>{$row['So_Dien_Thoai_Phong']}</td>
                                         
                                         <td>
-                                        <!--  -->
-                                        <a href="update-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Sửa </a>
-                                        <a id="delete_a" onclick="getConfirm()" href="delete-department.php?id=<?php echo $row['Ma_Phong_Ban']; ?>">Xóa </a>
+                                            <div style='display:flex;'>
+                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-department.php?id={$row['Ma_Phong_Ban']}' style='text-decoration: none;'>Sửa </a></button>
+                                                <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $departId)' style='text-decoration: none; color:red;'>Xóa </a></button>
+                                            </div>
                                         </td>
-                                    </tr>
-                                <?php }
+                                    </tr>";
 
+                                    } 
                                 ?>
                             </tbody>
                         </table>
@@ -146,15 +161,17 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         <script>
-            function getConfirm() {
-                var a = document.getElementById("delete_a");
-                
-                if(confirm("Bạn có muốn xóa phòng ban này không ?") == false) {
-                    a.href ="";
+            
+            function  getConfirm(aTag, empId) {
+            const conf = confirm('Bạn có muốn xóa phòng ban này không ?');
+                if(!conf) {
+                    aTag.href = '';
                 } else {
-                    
+                    aTag.href = 'delete-department.php?id=' +  empId ;
                 }
+                console.log(aTag);
             }
+            
         </script>
     </body>
 </html>

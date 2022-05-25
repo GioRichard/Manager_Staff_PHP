@@ -52,8 +52,8 @@
             
         </div>
         <div class="mb-3">
-            <label for="img" class="form-label">Ảnh đại diện</label>
-            <input type="text" class="form-control" name="img"    value="<?php echo $row['anh_dai_dien']; ?>">
+        <label for="img" class="form-label">Ảnh đại diện</label>
+            <input type="file" name="fileUpload" value="<?php echo $row['anh_dai_dien']; ?>" id="fileUpload" >
             
         </div>
 
@@ -68,7 +68,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
-        $img = $_POST['img'];
+        $img = $_POST['fileUpload'];
 
         $sql = "UPDATE `tai_khoan` SET  `ten_dang_nhap` = ' $username',`mat_khau` = '$password', `ten_nguoi_dung` = ' $fullname', `anh_dai_dien` = '$img' WHERE `tai_khoan`.`id` = $id";
         

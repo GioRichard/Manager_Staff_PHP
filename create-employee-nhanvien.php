@@ -1,5 +1,7 @@
 <?php
     require_once 'config.php';
+
+
     if(isset($_POST['submit'])) {
         //$ma_nhan_vien=$_POST['ma_nhan_vien'];
         $ten_nhan_vien=$_POST['ten_nhan_vien'];
@@ -17,7 +19,7 @@
     
         $result = mysqli_query($connect, $sql);
         
-        header("Location:manage-employee.php");
+        header("Location:manage-employee-nhanvien.php");
     }
 
 ?>

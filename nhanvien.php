@@ -45,7 +45,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./password-nhanvien.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="password-nhanvien.php">Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
@@ -73,10 +73,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./report-nhanvien.php">
+                            <!-- <a class="nav-link" href="./report-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Thống kê báo cáo
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -119,7 +119,7 @@
                                 </div>
                             </div>
                           
-                            <div class="col-xl-3 col-md-6">
+                            <!-- <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Thống kê</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -127,7 +127,7 @@
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="card-body">
                     
