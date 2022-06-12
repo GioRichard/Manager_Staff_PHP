@@ -6,10 +6,14 @@
     if(!isset($_SESSION['username'])) {
         header("location:login.php");
     }
-    $sql = "SELECT * FROM `nhan_vien`";
-    $result = mysqli_query($connect,$sql);
 
+    if(isset($_POST['submitLcb'])) {
+        $lcb =  $_POST['lcb'];
 
+        $sql = "UPDATE luong SET Luong_Co_Ban = '$lcb' ";
+        $result = mysqli_query($connect,$sql);
+        
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +28,12 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -36,8 +41,8 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    <!-- <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
                 </div>
             </form>
             <!-- Navbar-->
@@ -69,13 +74,25 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
+                            <a class="nav-link" href="./manage-position.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý chức vụ
+                            </a>
                             <a class="nav-link" href="./manage-employee.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
+                            <a class="nav-link" href="./manage-bonus.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý thưởng phạt
+                            </a>
                             <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý lương
+                            </a>
+                            <a class="nav-link" href="./attendance.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Điểm danh
                             </a>
                         </div>
                     </div>
@@ -87,25 +104,16 @@
             
             <div id="layoutSidenav_content">
                 <h1 class="mt-4" style="text-align:center;margin-bottom: 30px">Quản lý lương</h1>
-                
-                    <h4 style="text-align:right;margin-right:50px;">Lương cơ bản: 2.000.000 đồng</h4>
-                    
+                     
+                        <form action="" method="post" enctype="multipart/form">
+                            <h4 >Lương cơ bản: </h4>
+                            <input type="text" name="lcb" placeholder="" value="">
+                            <input type="submit" name="submitLcb" value="Nhập">
+                        </form>
+
                 
                 <div class="row">
-                    <!-- <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">
-                                <a href="" style="text-decoration: none; color: white;">Thống kê theo tháng</a> 
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">
-                                <a href="./export.php" style="text-decoration: none; color: white;">Xuất file excel</a>
-                            </div>
-                        </div>
-                    </div> -->
+                    
                     <div class="card-body">
                         <form action = "" method="get">
                             <table id="datatablesSimple">
@@ -113,27 +121,47 @@
                                     <tr>
                                         <th>Mã nhân viên</th>
                                         <th>Tên nhân viên</th>
-                                        <th>Mã lương cơ bản</th>
+                                        <th>Mã KTKL</th>
+                                        <th>Hệ số chức vụ</th>
+                                        <th>Số ngày làm</th>
+                                        <th>Lương cơ bản</th>
                                         <th>Lương thực tế</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     
                                     <?php
-                                        while($row = mysqli_fetch_assoc($result)) { 
-                                            $salary = $row['Luong_Co_Ban'] * 2000000;
-                                            echo "<tr>
+                                        $sql = "SELECT * FROM nhan_vien";
+                                        $result = mysqli_query($connect,$sql);
                                         
-                                            <td>{$row['Ma_Nhan_Vien']}</td>
-                                            <td>{$row['Ten_Nhan_Vien']}</td>
-                                            <td>{$row['Luong_Co_Ban']}</td>
-                                            <td>{$salary}</td>
+                                        while($row = mysqli_fetch_assoc($result)) { 
+                                            $cv = $row['Ma_Chuc_Vu'];
+                                            $id = $row['Ma_Nhan_Vien'];
+                                            $sql1 = "SELECT * FROM chuc_vu where Ma_Chuc_Vu = '$cv'";
+                                            $result1 = mysqli_query($connect,$sql1);
+                                            $row1 = mysqli_fetch_assoc($result1);
                                             
-                                            
-                                        </tr>";
+                                            $sql2 = "SELECT * FROM luong ";
+                                            $result2 = mysqli_query($connect,$sql2);
+                                            $row2 = mysqli_fetch_assoc($result2);
 
-                                        } 
+                                            $sql3 = "select * from khen_thuong_ki_luat";
+                                            $result3 = mysqli_query($connect,$sql3);
+                                            $row3 = mysqli_fetch_assoc($result3);                                     
+                                                $salary =$row2['He_so_luong'] * $row2['Luong_Co_Ban'] * $row['So_Ngay_Lam'] / 30 * $row1['He_So_Chuc_Vu'] ;
+                                                $salary += $row3['So_Tien'];
+                                    
+                                            echo "<tr>                                   
+                                                <td>{$row['Ma_Nhan_Vien']}</td>
+                                                <td>{$row['Ten_Nhan_Vien']}</td>
+                                                <td>{$row['Ma_KT_KL']}</td>
+                                                <td>{$row1['He_So_Chuc_Vu']}</td>
+                                                <td>{$row['So_Ngay_Lam']}</td>
+                                                <td>{$row2['Luong_Co_Ban']}</td>
+                                                <td>{$salary}</td>
+                                            </tr>";
+                                        }
+                                        
                                     ?>
                                 </tbody>
                             </table>

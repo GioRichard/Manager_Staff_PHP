@@ -3,38 +3,19 @@
     session_start();
 
     
-    if(!isset($_SESSION['ten_dang_nhap'])) {
+    if(!isset($_SESSION['username'])) {
         header("location:login.php");
     }
     
-    $sql_account = "SELECT id FROM `tai_khoan`  ";
-    $result_account = mysqli_query($connect,$sql_account);
 
-    $dem_account = mysqli_num_rows($result_account);
 
-    $sql_depart = "SELECT Ma_Phong_Ban FROM `phong_ban`";
-    $result_depart = mysqli_query($connect,$sql_depart);
-
-    $dem_depart = mysqli_num_rows($result_depart);
-
-    $sql_employ = "SELECT Ma_Nhan_Vien FROM `nhan_vien`";
-    $result_employ = mysqli_query($connect,$sql_employ);
-
-    $dem_employ = mysqli_num_rows($result_employ);
-
-    $sql_position = "SELECT Ma_Chuc_Vu FROM `chuc_vu`";
-    $result_position = mysqli_query($connect,$sql_position);
-
-    $dem_position = mysqli_num_rows($result_position);
-    
-    
-    
+    $now = getdate();
 
     
+    $currentDate = $now["mday"]  . "-". $now["mon"] . "-". $now["year"];
+       
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,19 +28,13 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <style>
-            .num-account {
-                font-style: bold;
-                font-size: 30px;
-                text-align: right;
-                margin-right: 30px;
-            }
-        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="nhanvien.php">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -76,9 +51,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="password-nhanvien.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./login.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -88,32 +63,35 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="nhanvien.php">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            
-                            <a class="nav-link" href="./manage-department-nhanvien.php">
+                            <a class="nav-link" href="./manage-account.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý tài khoản
+                            </a>
+                            <a class="nav-link" href="./manage-department.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-position-nhanvien.php">
+                            <a class="nav-link" href="./manage-position.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý chức vụ
                             </a>
-                            <a class="nav-link" href="./manage-employee-nhanvien.php">
+                            <a class="nav-link" href="./manage-employee.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./manage-bonus-nhanvien.php">
+                            <a class="nav-link" href="./manage-bonus.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý thưởng phạt
                             </a>
-                            <a class="nav-link" href="./salary-nhanvien.php">
+                            <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý lương
                             </a>
-                            <a class="nav-link" href="./attendance-nhanvien.php">
+                            <a class="nav-link" href="./attendance.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Điểm danh
                             </a>
@@ -124,52 +102,71 @@
                     </div>
                 </nav>
             </div>
+            
             <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Trang chủ</h1>
-                        
-                        <div class="row">
-                            
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Phòng ban</div>
-                                    <div class="num-account" ><?php echo $dem_depart; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-department-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Chức vụ</div>
-                                    <div class="num-account" ><?php echo $dem_position; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./salary-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Nhân viên</div>
-                                    <div class="num-account" ><?php echo $dem_employ; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-employee-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                          
-                            
-                        </div>
-                        <div class="card-body">
+                <h1 class="mt-4" style="text-align:center;margin-bottom: 30px">Điểm danh ngày <?php echo $currentDate; ?></h1> </h1> </h1>
+                
                     
-                </div>
-                        
+                    
+                
+                <div class="row">
+                    
+                    <div class="card-body">
+                        <form action = "xuly.php" method="get">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã nhân viên</th>
+                                        <th>Tên nhân viên</th>
+                                        
+                                        <th>Vắng mặt</th>
+                                        <th>Đi học</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $sql = "SELECT * FROM `nhan_vien`";
+
+                                        $result = mysqli_query($connect,$sql);
+                                        $stt = 0;
+                                        while($row = mysqli_fetch_assoc($result)) {
+                                            $stt++;
+                                        
+
+                                    ?>
+                                   <tr>
+                                       <td><?php echo $stt; ?></td>
+                                       <td>
+                                           <input type="text" name="Ma_Nhan_Vien_<?php echo $stt; ?>" class="text" value="<?php echo $row['Ma_Nhan_Vien']; ?>" />
+                                           
+                                        </td>
+                                       <td><?php echo $row['Ten_Nhan_Vien']; ?></td>
+                                       
+                                       <td>
+                                           <input type="radio" name="<?php echo $stt; ?>"  value="0" /> 
+                                       </td>
+                                       <td>
+                                           <input type="radio" name="<?php echo $stt; ?>"  value="1"  checked="true"/>
+                                       </td>
+                                       <td>
+                                            <input class="text" name="note_<?php echo $stt; ?>" value=""></input>
+
+                                       </td>
+                                       
+                                   </tr>
+                                   <?php
+                                        }
+
+                                    ?>
+                                </tbody>
+                            </table>
+                            <input type="submit" class="submit" value="Save">
+                            <input type="reset" class="reset" value="Reset">
+                        </form>
                     </div>
-                </main>
+                </div>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div style="display: block; text-align: center;">
@@ -189,3 +186,11 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
+
+
+<?php
+
+    
+    
+
+?>

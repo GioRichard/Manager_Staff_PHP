@@ -6,34 +6,11 @@
     if(!isset($_SESSION['ten_dang_nhap'])) {
         header("location:login.php");
     }
-    
-    $sql_account = "SELECT id FROM `tai_khoan`  ";
-    $result_account = mysqli_query($connect,$sql_account);
+    $sql = "SELECT * FROM `chuc_vu`";
+    $result = mysqli_query($connect,$sql);
 
-    $dem_account = mysqli_num_rows($result_account);
-
-    $sql_depart = "SELECT Ma_Phong_Ban FROM `phong_ban`";
-    $result_depart = mysqli_query($connect,$sql_depart);
-
-    $dem_depart = mysqli_num_rows($result_depart);
-
-    $sql_employ = "SELECT Ma_Nhan_Vien FROM `nhan_vien`";
-    $result_employ = mysqli_query($connect,$sql_employ);
-
-    $dem_employ = mysqli_num_rows($result_employ);
-
-    $sql_position = "SELECT Ma_Chuc_Vu FROM `chuc_vu`";
-    $result_position = mysqli_query($connect,$sql_position);
-
-    $dem_position = mysqli_num_rows($result_position);
-    
-    
-    
-
-    
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,19 +24,21 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
         <style>
-            .num-account {
-                font-style: bold;
-                font-size: 30px;
-                text-align: right;
-                margin-right: 30px;
+            a {
+                text-decoration: none;
+                list-style-type: none;
+                
             }
         </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="nhanvien.php">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -76,8 +55,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="password-nhanvien.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -124,52 +103,55 @@
                     </div>
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Trang chủ</h1>
-                        
-                        <div class="row">
-                            
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Phòng ban</div>
-                                    <div class="num-account" ><?php echo $dem_depart; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-department-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Chức vụ</div>
-                                    <div class="num-account" ><?php echo $dem_position; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./salary-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Nhân viên</div>
-                                    <div class="num-account" ><?php echo $dem_employ; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-employee-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                          
-                            
-                        </div>
-                        <div class="card-body">
-                    
+            
+            <div id="layoutSidenav_content" style="margin-left: 30px;">
+                <h1 class="mt-4" style="text-align: center;">Quản lý chức vụ</h1>
+                
+                <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a href="./create-position.php">Thêm mới</a></button>
+                        <form method="post" action="export.php">
+                                <input type="submit" name="export-depart" class="btn btn-success" value="Export" />
+                        </form>
                 </div>
-                        
-                    </div>
-                </main>
+                <div class="card-body">
+                    <form action = "" method="get">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>Mã chức vụ</th>
+                                    <th>Tên chức vụ</th>
+                                    <th>Hệ số chức vụ</th>
+                                   
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <?php
+                                    while($row = mysqli_fetch_assoc($result)) { 
+                                        $positionID = $row['Ma_Chuc_Vu'];
+                                        echo "<tr>
+                                    
+                                        <td>{$row['Ma_Chuc_Vu']}</td>
+                                        <td>{$row['Ten_Chuc_Vu']}</td>
+                                        <td>{$row['He_So_Chuc_Vu']}</td>
+                                        
+                                        
+                                        <td>
+                                            <div style='display:flex;'>
+                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-position.php?id={$row['Ma_Chuc_Vu']}' style='text-decoration: none;'>Sửa </a></button>
+                                                <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $positionID)' style='text-decoration: none; color:red;'>Xóa </a></button>
+                                            </div>
+                                        </td>
+                                    </tr>";
+                                        
+                                    } 
+                                ?>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <hr>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div style="display: block; text-align: center;">
@@ -187,5 +169,18 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            
+            function  getConfirm(aTag, empId) {
+            const conf = confirm('Bạn có muốn xóa chức vụ này không ?');
+                if(!conf) {
+                    aTag.href = '';
+                } else {
+                    aTag.href = 'delete-department.php?id=' +  empId ;
+                }
+                console.log(aTag);
+            }
+            
+        </script>
     </body>
 </html>

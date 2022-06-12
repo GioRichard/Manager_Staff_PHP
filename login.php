@@ -9,7 +9,7 @@
     $usernameErr = "";
     $passwordErr = "";
     
-    if(isset($_SESSION['username'])) {
+    if(isset($_SESSION['ten_dang_nhap'])) {
         header("location:index.php");
     }
     if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -44,15 +44,15 @@
 
         
         $error = "";
-        $sqlAdmin = "SELECT * FROM `tbladmin` where username = '$username' and password = '$password'";
+        $sqlAdmin = "SELECT * FROM `tai_khoan` where ten_dang_nhap = '$username' and mat_khau = '$password' and chuc_nang = 1";
         $resultAdmin = mysqli_query($connect,$sqlAdmin);
 
         if(mysqli_num_rows($resultAdmin) > 0 ) {
             $_SESSION['username'] = $username;
             header("location:index.php");
         }else {
-            //$error =  "Tài khoản hoặc mật khẩu sai";
-            $sql = "SELECT * FROM tai_khoan where ten_dang_nhap = '$username' and mat_khau = '$password' ";
+            
+            $sql = "SELECT * FROM tai_khoan where ten_dang_nhap = '$username' and mat_khau = '$password' and chuc_nang != 1 ";
     
        
             $result = mysqli_query($connect,$sql);
@@ -109,10 +109,10 @@
                                                 <span style="color:red"> <?php echo $passwordErr; ?></span>
                                                 
                                             </div>
-                                            <div class="form-check mb-3">
+                                            <!-- <div class="form-check mb-3">
                                                 <input class="form-check-input" name="RememberPassword" type="checkbox" value="" />
                                                 <label class="form-check-label" for="RememberPassword">Nhớ mật khẩu</label>
-                                            </div>
+                                            </div> -->
                                             <div class="form-check mb-3">
                                                 <span><?php  echo $error;  ?></span>
                                             </div>
@@ -120,10 +120,7 @@
                                                 
                                                 <input style="width:100%; height: 45px; text-align: center;" class="btn btn-primary" type="submit" name="submit" value="Login">
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="">Quên mật khẩu?</a>
-                                                
-                                            </div>
+                                            
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">

@@ -75,17 +75,40 @@
             
         </div>
         <div class="mb-3">
-            <label for="gioi_tinh" class="form-label">Giới tính</label>
-            <input type="text" class="form-control"   name="gioi_tinh" placeholder="" >
+            <label for="gioi_tinh" class="form-label">Giới tính </label>
+            <input type="radio" style="margin-left:70px;" name="gender" value="1" >Nam
+            <input type="radio" style="margin-left:70px;" name="gender" value="0">Nữ
         </div>
         <div class="mb-3">
             <label for="chuc_vu" class="form-label"> Chức vụ</label>
-            <input type="text" class="form-control"   name="chuc_vu" placeholder="" >
+            <br>
+            <select name="chuc_vu" class="form-select">
+						<?php
+                        $sql = "SELECT * FROM chuc_vu  ";
+                        $run = mysqli_query($connect,$sql);
+						while($rows = mysqli_fetch_array($run)) {	
+							?>
+                          <option selected="selected" value="<?php echo $rows["Ma_Chuc_Vu"]; ?>"><?php echo $rows["Ten_Chuc_Vu"]; ?></option>
+							<?php
+						}
+						?>
+			</select>
             
         </div>
         <div class="mb-3">
             <label for="phong_ban" class="form-label">Phòng ban</label>
-            <input type="text" class="form-control"   name="phong_ban" placeholder="" >
+            <br>
+            <select name="phong_ban" class="form-select">
+						<?php
+                        $sql = "SELECT * FROM phong_ban  ";
+                        $run = mysqli_query($connect,$sql);
+						while($rows = mysqli_fetch_array($run)) {	
+							?>
+                          <option selected="selected" value="<?php echo $rows["Ma_Phong_Ban"]; ?>"><?php echo $rows["Ten_Phong_Ban"]; ?></option>
+							<?php
+						}
+						?>
+			</select>
             
         </div>
         <div class="mb-3">

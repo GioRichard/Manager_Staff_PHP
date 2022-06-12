@@ -1,5 +1,6 @@
 <?php
     require_once 'config.php';
+    $err = "";
     $usernameErr = $passwordErr = $fullnameErr = $imgErr
     = $username =$password = $fullname = $img = "";
 
@@ -47,19 +48,6 @@
         if(!in_array( strtolower($file_type), $file_type_allow)) {
             $error['fileUpload'] = "Chỉ cho phép upload file ảnh";
         }
-        // 3. kiểm tra sự tồn tại file 
-        //  if(file_exists($target_file)) {
-        //      $error['fileUpload'] = "File đã tồn tại trong hệ thống";
-        //      header('Location:create-account.php'); 
-        //  }
-        if(empty($error)) { 
-            if(move_uploaded_file($_FILES['fileUpload']['tmp_name'],$target_file)) {
-                echo "Bạn đã upload thành công";
-                $flag = true;
-            }else{
-                echo "Bạn đã upload thất bại";
-            }
-        }
         
 
 
@@ -67,21 +55,29 @@
     }
     if(isset($_POST['submit'])) {
 
-
-      
-
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
         $img = $_FILES['fileUpload']['name'];
 
-       
+        $sql1 = "SELECT * FROM tai_khoan where ten_dang_nhap = '$username' ";
+
+        $result1 = mysqli_query($connect,$sql1);
+        //$password = md5($password);
+        $dem = mysqli_num_rows($result1);
+        
+        if($dem > 0) {
+            $err = "Tên đăng nhập đã tồn tại.";
+            //header("Location:register.php");
+        }else{
+            $sql = "INSERT INTO `tai_khoan` (`id`, `ten_dang_nhap`, `mat_khau`, `ten_nguoi_dung`, `anh_dai_dien`) VALUES (NULL, '$username', '$password', '$fullname', '$img')";
+
+            $result = mysqli_query($connect, $sql);
+    
+            header("Location:manage-account.php");
+        }
  
-        $sql = "INSERT INTO `tai_khoan` (`id`, `ten_dang_nhap`, `mat_khau`, `ten_nguoi_dung`, `anh_dai_dien`) VALUES (NULL, '$username', '$password', '$fullname', '$img')";
-
-        $result = mysqli_query($connect, $sql);
-
-        header("Location:manage-account.php");
+        
     }
 
     // Hàm kiểm tra
@@ -110,6 +106,9 @@
             box-sizing: border-box;
             margin:  0 auto;
         }
+        span{
+            color: red;
+        }
         h2 {
             text-align: center;
         }
@@ -121,7 +120,7 @@
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
             <input type="text" class="form-control" name="username" placeholder=""  >
-            <span > <?php echo $usernameErr;?></span>
+            <span > <?php echo $err;?></span>
         </div>
         <div class="mb-3">
             <label for="Mật khẩu" class="form-label">Mật khẩu</label>

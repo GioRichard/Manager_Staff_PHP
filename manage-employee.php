@@ -8,9 +8,12 @@
         header("location:login.php");
     }
 
-    $sql =  "SELECT * FROM `nhan_vien`";
+    $sql =  "SELECT * FROM `nhan_vien` ";
+    
 
     $result = mysqli_query($connect,$sql);
+    $maphongban= $machucvu = "";
+    
 
 ?>
 
@@ -41,7 +44,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -49,8 +52,8 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    <!-- <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
                 </div>
             </form>
             <!-- Navbar-->
@@ -82,13 +85,25 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
+                            <a class="nav-link" href="./manage-position.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý chức vụ
+                            </a>
                             <a class="nav-link" href="./manage-employee.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
+                            <a class="nav-link" href="./manage-bonus.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý thưởng phạt
+                            </a>
                             <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý lương
+                            </a>
+                            <a class="nav-link" href="./attendance.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Điểm danh
                             </a>
                         </div>
                     </div>
@@ -120,9 +135,9 @@
                                 <th>Email</th>
                                 <th>Số điện thoại</th>
                                 <th>Giới tính</th>
-                                <th>Mã chức vụ</th>
-                                <th>Mã phòng ban</th>
-                                <th>Mã lương cơ bản</th>
+                                <th>Chức vụ</th>
+                                <th>Phòng <br>ban</th>
+                                <th>Số ngày làm</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -130,6 +145,17 @@
                                 <?php
                                     while($row = mysqli_fetch_assoc($result)) { 
                                         $employeeId = $row['Ma_Nhan_Vien'];
+                                        $maphongban = $row['Ma_Phong_Ban'];
+                                        $machucvu = $row['Ma_Chuc_Vu'];
+
+                                        $sql1 = "SELECT * FROM `phong_ban` where Ma_Phong_Ban = '$maphongban'";
+                                        $result1 = mysqli_query($connect,$sql1);
+                                        $row1 = mysqli_fetch_array($result1);
+
+                                        $sql2 = "SELECT * FROM `chuc_vu` where Ma_Chuc_Vu = '$machucvu'";
+                                        $result2 = mysqli_query($connect,$sql2);
+                                        $row2 = mysqli_fetch_array($result2);
+
                                         echo "<tr>
                                     
                                         <td>{$row['Ma_Nhan_Vien']}</td>
@@ -139,9 +165,9 @@
                                         <td>{$row['Email']}</td>
                                         <td>{$row['So_Dien_Thoai']}</td>
                                         <td>{$row['Gioi_Tinh']}</td>
-                                        <td>{$row['Ma_Chuc_Vu']}</td>
-                                        <td>{$row['Ma_Phong_Ban']}</td>
-                                        <td>{$row['Luong_Co_Ban']}</td>
+                                        <td>{$row2['Ten_Chuc_Vu']}</td>
+                                        <td>{$row1['Ten_Phong_Ban']}</td>
+                                        <td>{$row['So_Ngay_Lam']}</td>
                                         <td>
                                             <div style='display:flex;'>
                                                 <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-employee.php?id={$row['Ma_Nhan_Vien']}' style='text-decoration: none;'>Sửa </a></button>
@@ -187,3 +213,9 @@
         </script>
     </body>
 </html>
+
+<?php
+    
+
+
+?>

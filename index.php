@@ -20,16 +20,15 @@
     $sql_employ = "SELECT Ma_Nhan_Vien FROM `nhan_vien`";
     $result_employ = mysqli_query($connect,$sql_employ);
 
-    $dem_employ = mysqli_num_rows($result_employ);
+    $dem_employ = mysqli_num_rows($result_employ);  
+
+    // $sql_sum = "SELECT SUM(Luong_co_ban) FROM `nhan_vien`";
+    // $result_sum  = mysqli_query($connect,$sql_sum);
+    // $row = mysqli_fetch_array($result_sum);
+    // $total_salary = $row[0] * 2000000;
 
 
 
-
-
-    
-
-
-    
 ?>
 
 
@@ -65,8 +64,8 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    <!-- <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
                 </div>
             </form>
             <!-- Navbar-->
@@ -75,7 +74,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="information.php">Thông tin tài khoản</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -98,13 +97,25 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
+                            <a class="nav-link" href="./manage-position.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý chức vụ
+                            </a>
                             <a class="nav-link" href="./manage-employee.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
+                            <a class="nav-link" href="./manage-bonus.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý thưởng phạt
+                            </a>
                             <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý lương
+                            </a>
+                            <a class="nav-link" href="./attendance.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Điểm danh
                             </a>
                         </div>
                     </div>
@@ -152,10 +163,10 @@
                           
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Lương</div>
+                                    <div class="card-body">Tổng lương</div>
                                     <div class="num-account" >0</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./report.php">Chi tiết</a>
+                                        <a class="small text-white stretched-link" href="./salary.php">Chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>

@@ -1,31 +1,75 @@
 <?php
     require_once 'config.php';
     session_start();
-    $msg = "";
-    if(isset($_POST['submit']))  {
-        $name = $_SESSION['ten_dang_nhap '];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $fullname = $_POST['fullname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
+    $usernameErr = $passwordErr = $fullnameErr = $imgErr
+    = $username =$password = $fullname = $img = "";
 
-        $sql = "UPDATE tbladmin SET username= '$username', password = '$password', adminName = '$fullname',phone= '$phone', email = '$email' where username = '$name'";
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        
+        $error = "";
+        $target_dir = "uploads/";
+        // Tạo đường dẫn file sau khi uploads
+        $target_file = $target_dir.basename($_FILES['fileUpload']['name']);
+        //echo $target_file;
 
+        // Kiểm tra điều kiện uploads 
+        //1. Kiểm tra kích thước file 
 
-        $result = mysqli_query($connect, $sql);
-    
-        if($result) {
-            $msg = "Tài khoản admin đã được cập nhật";
-        }else{
-            $msg = "Tài khoản admin chưa được cập nhật";
+        if($_FILES['fileUpload']['size'] > 3145728) {
+            $error['fileUpload'] = "Chỉ được upload file dưới 3mb";
         }
+        //2. kiểm tra loại file
+        $file_type = pathinfo($_FILES['fileUpload']['name'], PATHINFO_EXTENSION);
+        //echo $file_type;
+       
+        $file_type_allow = array('png','jpeg','jpg','pdf','gif');
+
+        if(!in_array( strtolower($file_type), $file_type_allow)) {
+            $error['fileUpload'] = "Chỉ cho phép upload file ảnh";
+        }
+        // 3. kiểm tra sự tồn tại file 
+        //  if(file_exists($target_file)) {
+        //      $error['fileUpload'] = "File đã tồn tại trong hệ thống";
+        //      header('Location:create-account.php'); 
+        //  }
+        if(empty($error)) { 
+            if(move_uploaded_file($_FILES['fileUpload']['tmp_name'],$target_file)) {
+                echo "Bạn đã upload thành công";
+                $flag = true;
+            }else{
+                echo "Bạn đã upload thất bại";
+            }
+        }
+        
+
+
 
     }
+    if(isset($_POST['submit'])) {
+        $name = $_SESSION['ten_dang_nhap'];
+        $username = $_POST['username'];
+        
+        $fullname = $_POST['fullname'];
+        $img = $_FILES['fileUpload']['name'];
+
+ 
+        $sql = "UPDATE `tai_khoan` SET   `ten_nguoi_dung` = ' $fullname', `anh_dai_dien` = '$img' where `ten_dang_nhap` = '$name'";
+
+        $result = mysqli_query($connect, $sql);
+
+        //$_SESSION['username'] = $username;
+    }
+
+    // Hàm kiểm tra
     
-
+    
+    function test($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +93,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.php">
+            <a class="navbar-brand ps-3" href="nhanvien.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -57,8 +101,8 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    <!-- <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
                 </div>
             </form>
             <!-- Navbar-->
@@ -66,7 +110,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="password-nhanvien.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./password-nhanvien.php">Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
@@ -82,22 +126,31 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            <!-- <a class="nav-link" href="./manage-account.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý tài khoản
-                            </a> -->
+                            
                             <a class="nav-link" href="./manage-department-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
+                            </a>
+                            <a class="nav-link" href="./manage-position-nhanvien.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý chức vụ
                             </a>
                             <a class="nav-link" href="./manage-employee-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <!-- <a class="nav-link" href="./report.php">
+                            <a class="nav-link" href="./manage-bonus-nhanvien.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Thống kê báo cáo
-                            </a> -->
+                                Quản lý thưởng phạt
+                            </a>
+                            <a class="nav-link" href="./salary-nhanvien.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý lương
+                            </a>
+                            <a class="nav-link" href="./attendance-nhanvien.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Điểm danh
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -106,9 +159,9 @@
                 </nav>
             </div>
             <div class="container">
-                <h2 class="mt-4">Thông tin tài khoản</h2>
-                <span style="color:red"><?php echo $msg;  ?></span>
-                <form action="" method="post" enctype="multipart/form">
+                <h2 class="mt-4" style="text-align:center;">Thông tin tài khoản</h2>
+                <!-- <span style="color:red"><?php echo $msg;  ?></span> -->
+                <form action="" method="post" action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 
 <?php
 
@@ -121,28 +174,27 @@
     
 ?>
                     <div class="mb-3">
-                        <label for="username" class="form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control" name="username" placeholder="" value="<?php echo $row['ten_dang_nhap']; ?>">
+                        <label for="username" class="form-label" >Tên đăng nhập</label>
+                        <span  class="form-control"   value=""><?php echo $row['ten_dang_nhap']; ?></span>
                         
                     </div>
-                    <div class="mb-3">
-                        <label for="Mật khẩu" class="form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" name="password"  value="<?php echo $row['mat_khau']; ?>">
-                        
-                    </div>
+                    
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Tên người dùng</label>
                         <input type="text" class="form-control"   name="fullname" placeholder="" value="<?php echo $row['ten_nguoi_dung']; ?>">
                         
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Ảnh đại diện</label>
-                        <input type="text" class="form-control" name="email"    value="<?php echo $row['anh_dai_dien']; ?>">
+                        <label for="img" class="form-label">Ảnh đại diện</label>
+                        <input type="file" name="fileUpload" value="" id="fileUpload" >
                         
                     </div>
                     
                     <?php   } ?>
-                    <button type="submit" name="submit" class="btn btn-primary">Cập nhật</button>
+                    <div style="text-align:center;">
+                        <button type="submit" name="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                    
                     
                 </form>
             </div>

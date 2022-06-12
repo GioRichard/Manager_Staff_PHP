@@ -6,35 +6,20 @@
     if(!isset($_SESSION['ten_dang_nhap'])) {
         header("location:login.php");
     }
-    
-    $sql_account = "SELECT id FROM `tai_khoan`  ";
-    $result_account = mysqli_query($connect,$sql_account);
 
-    $dem_account = mysqli_num_rows($result_account);
+    if(isset($_POST['submitLcb'])) {
+        $lcb =  $_POST['lcb'];
 
-    $sql_depart = "SELECT Ma_Phong_Ban FROM `phong_ban`";
-    $result_depart = mysqli_query($connect,$sql_depart);
-
-    $dem_depart = mysqli_num_rows($result_depart);
-
-    $sql_employ = "SELECT Ma_Nhan_Vien FROM `nhan_vien`";
-    $result_employ = mysqli_query($connect,$sql_employ);
-
-    $dem_employ = mysqli_num_rows($result_employ);
-
-    $sql_position = "SELECT Ma_Chuc_Vu FROM `chuc_vu`";
-    $result_position = mysqli_query($connect,$sql_position);
-
-    $dem_position = mysqli_num_rows($result_position);
-    
+        $sql = "UPDATE luong SET Luong_Co_Ban = '$lcb' ";
+        $result = mysqli_query($connect,$sql);
+        //$rowLcb = mysqli_fetch_array($result);
+        
+    }
     
     
 
-    
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,19 +32,13 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <style>
-            .num-account {
-                font-style: bold;
-                font-size: 30px;
-                text-align: right;
-                margin-right: 30px;
-            }
-        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="nhanvien.php">
+            <a class="navbar-brand ps-3" href="index.php">
                 <img class="header-logo" width="120px" height="60px" style="margin-left: 30px;" src="./assets/img/Logo1.png" alt="">    
             </a>
             <!-- Sidebar Toggle-->
@@ -76,9 +55,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="password-nhanvien.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="information-nhanvien.php">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="./password-nhanvien.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information-nhanvien.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./login.php">Đăng xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -124,52 +103,87 @@
                     </div>
                 </nav>
             </div>
+            
             <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Trang chủ</h1>
-                        
-                        <div class="row">
-                            
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Phòng ban</div>
-                                    <div class="num-account" ><?php echo $dem_depart; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-department-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
+                <h1 class="mt-4" style="text-align:center;margin-bottom: 30px">Quản lý lương</h1>
+                     
+                        <form action="" method="post" enctype="multipart/form">
+                            <h4 >Lương cơ bản: </h4>
+                            <input type="text" name="lcb" placeholder="" value="">
+                            <input type="submit" name="submitLcb" value="Nhập">
+                        </form>
+
+                
+                <div class="row">
+                    <!-- <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">
+                                <a href="" style="text-decoration: none; color: white;">Thống kê theo tháng</a> 
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Chức vụ</div>
-                                    <div class="num-account" ><?php echo $dem_position; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./salary-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Nhân viên</div>
-                                    <div class="num-account" ><?php echo $dem_employ; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-employee-nhanvien.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                          
-                            
                         </div>
-                        <div class="card-body">
-                    
-                </div>
-                        
+                    </div> -->
+                    <!-- <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                            <div class="card-body">
+                                <a href="./export.php" style="text-decoration: none; color: white;">Xuất file excel</a>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="card-body">
+                        <form action = "" method="get">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Mã nhân viên</th>
+                                        <th>Tên nhân viên</th>
+                                        <th>Mã KTKL</th>
+                                        <th>Hệ số chức vụ</th>
+                                        <th>Số ngày làm</th>
+                                        <th>Lương cơ bản</th>
+                                        <th>Lương thực tế</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <?php
+                                        $sql = "SELECT * FROM nhan_vien";
+                                        $result = mysqli_query($connect,$sql);
+                                        
+                                        while($row = mysqli_fetch_assoc($result)) { 
+                                            $cv = $row['Ma_Chuc_Vu'];
+                                            $id = $row['Ma_Nhan_Vien'];
+                                            $sql1 = "SELECT * FROM chuc_vu where Ma_Chuc_Vu = '$cv'";
+                                            $result1 = mysqli_query($connect,$sql1);
+                                            $row1 = mysqli_fetch_assoc($result1);
+                                            
+                                            $sql2 = "SELECT * FROM luong ";
+                                            $result2 = mysqli_query($connect,$sql2);
+                                            $row2 = mysqli_fetch_assoc($result2);
+
+                                            $sql3 = "select * from khen_thuong_ki_luat";
+                                            $result3 = mysqli_query($connect,$sql3);
+                                            $row3 = mysqli_fetch_assoc($result3);
+
+                                            $salary =$row2['He_so_luong'] * $row2['Luong_Co_Ban'] * $row['So_Ngay_Lam'] * $row1['He_So_Chuc_Vu'] ;
+                                            $salary += $row3['So_Tien'];
+                                            
+                                            echo "<tr>                                   
+                                                <td>{$row['Ma_Nhan_Vien']}</td>
+                                                <td>{$row['Ten_Nhan_Vien']}</td>
+                                                <td>{$row['Ma_KT_KL']}</td>
+                                                <td>{$row1['He_So_Chuc_Vu']}</td>
+                                                <td>{$row['So_Ngay_Lam']}</td>
+                                                <td>{$row2['Luong_Co_Ban']}</td>
+                                                <td>{$salary}</td>
+                                            </tr>";
+                                        }
+                                        
+                                    ?>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
-                </main>
+                </div>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div style="display: block; text-align: center;">
