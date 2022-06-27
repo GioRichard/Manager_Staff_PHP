@@ -81,8 +81,8 @@
             
         </div>
         <div class="mb-3">
-            <label for="luong_co_ban" class="form-label">Lương cơ bản</label>
-            <input type="text" class="form-control" name="luong_co_ban"  value="<?php echo $row['Luong_Co_Ban']; ?>"  >
+            <label for="he_so_luong" class="form-label">Hệ số lương</label>
+            <input type="text" class="form-control" name="he_so_luong"  value="<?php echo $row['He_So_Luong']; ?>"  >
             
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
@@ -104,8 +104,8 @@
         $gioi_tinh = $_POST['gioi_tinh'];
         $chuc_vu = $_POST['chuc_vu'];
         $phong_ban = $_POST['phong_ban'];
-        $luong_co_ban = $_POST['luong_co_ban'];
-        $sql = " UPDATE `nhan_vien` SET `Ten_Nhan_Vien` = '$ten_nhan_vien', `Ngay_Sinh` = ' $ngay_sinh ', `Dia_Chi` = ' $dia_chi',  `Email` = '$email', `So_Dien_Thoai` = '$phone', `Gioi_Tinh` = '$gioi_tinh', `Ma_Chuc_Vu` = '$chuc_vu', `Ma_Phong_Ban` = '$phong_ban',  `Luong_Co_Ban` = '$luong_co_ban' WHERE `nhan_vien`.`Ma_Nhan_Vien` = $id ";
+        $he_so_luong = $_POST['he_so_luong'];
+        $sql = " UPDATE `nhan_vien` SET `Ten_Nhan_Vien` = '$ten_nhan_vien', `Ngay_Sinh` = ' $ngay_sinh ', `Dia_Chi` = ' $dia_chi',  `Email` = '$email', `So_Dien_Thoai` = '$phone', `Gioi_Tinh` = '$gioi_tinh', `Ma_Chuc_Vu` = '$chuc_vu', `Ma_Phong_Ban` = '$phong_ban',  `He_So_Luong` = '$he_so_luong' WHERE `nhan_vien`.`Ma_Nhan_Vien` = $id ";
     
         $result = mysqli_query($connect,$sql);
         

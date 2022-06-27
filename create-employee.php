@@ -10,10 +10,10 @@
         $gioi_tinh = $_POST['gioi_tinh'];
         $chuc_vu = $_POST['chuc_vu'];
         $phong_ban = $_POST['phong_ban'];
-        $luong_co_ban = $_POST['luong_co_ban'];
+        $he_so_luong = $_POST['he_so_luong'];
     
-        $sql = "INSERT INTO `nhan_vien` (`Ma_Nhan_Vien`, `Ten_Nhan_Vien`, `Ngay_Sinh`, `Dia_Chi`, `Email`, `So_Dien_Thoai`, `Gioi_Tinh`, `Ma_Chuc_Vu`, `Ma_Phong_Ban`, `Luong_Co_Ban`)
-         VALUES (NULL, '$ten_nhan_vien', '$ngay_sinh', '$dia_chi', '$email', '$phone', '$gioi_tinh', '$chuc_vu', '$phong_ban', '$luong_co_ban')";
+        $sql = "INSERT INTO `nhan_vien` (`Ma_Nhan_Vien`, `Ten_Nhan_Vien`, `Ngay_Sinh`, `Dia_Chi`, `Email`, `So_Dien_Thoai`, `Gioi_Tinh`, `Ma_Chuc_Vu`, `Ma_Phong_Ban`, `He_So_Luong`)
+         VALUES (NULL, '$ten_nhan_vien', '$ngay_sinh', '$dia_chi', '$email', '$phone', '$gioi_tinh', '$chuc_vu', '$phong_ban', '$he_so_luong')";
     
         $result = mysqli_query($connect, $sql);
         
@@ -66,8 +66,7 @@
         </div>
         <div class="mb-3">
             <label for="dia_chi" class="form-label">Địa chỉ</label>
-            <input type="text" class="form-control"   name="dia_chi" placeholder="" >
-            
+            <input type="text" class="form-control"   name="dia_chi" placeholder="" >  
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -112,8 +111,8 @@
             
         </div>
         <div class="mb-3">
-            <label for="luong_co_ban" class="form-label">Lương cơ bản</label>
-            <input type="text" class="form-control" name="luong_co_ban"    >
+            <label for="he_so_luong" class="form-label">Hệ số lương</label>
+            <input type="text" class="form-control" name="he_so_luong"    >
             
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>

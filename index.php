@@ -22,10 +22,10 @@
 
     $dem_employ = mysqli_num_rows($result_employ);  
 
-    // $sql_sum = "SELECT SUM(Luong_co_ban) FROM `nhan_vien`";
-    // $result_sum  = mysqli_query($connect,$sql_sum);
-    // $row = mysqli_fetch_array($result_sum);
-    // $total_salary = $row[0] * 2000000;
+    $sql_position = "SELECT Ma_Chuc_Vu FROM `chuc_vu`";
+    $result_position = mysqli_query($connect,$sql_position);
+
+    $dem_position = mysqli_num_rows($result_position); 
 
 
 
@@ -141,6 +141,16 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
+                                <div class="card bg-danger text-white mb-4">
+                                    <div class="card-body">Chức vụ</div>
+                                    <div class="num-account" ><?php echo $dem_position; ?></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="./manage-position.php">Chi tiết</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body">Phòng ban</div>
                                     <div class="num-account" ><?php echo $dem_depart; ?></div>
@@ -161,16 +171,7 @@
                                 </div>
                             </div>
                           
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Tổng lương</div>
-                                    <div class="num-account" >0</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./salary.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="card-body">
                     

@@ -130,6 +130,7 @@
                                 <th>Mã chức vụ</th>
                                 <th>Mã phòng ban</th>
                                 <th>Mã KTKL</th>
+                                <th>Hệ số lương</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -149,6 +150,7 @@
                                         <td>{$row['Ma_Chuc_Vu']}</td>
                                         <td>{$row['Ma_Phong_Ban']}</td>
                                         <td>{$row['Ma_KT_KL']}</td>
+                                        <td>{$row['He_So_Luong']}</td>
                                         <td>
                                             <div style='display:flex;'>
                                                 <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-employee-nhanvien.php?id={$row['Ma_Nhan_Vien']}' style='text-decoration: none;'>Sửa </a></button>

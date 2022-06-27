@@ -138,6 +138,7 @@
                                 <th>Chức vụ</th>
                                 <th>Phòng <br>ban</th>
                                 <th>Số ngày làm</th>
+                                <th>Hệ số lương</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -168,6 +169,7 @@
                                         <td>{$row2['Ten_Chuc_Vu']}</td>
                                         <td>{$row1['Ten_Phong_Ban']}</td>
                                         <td>{$row['So_Ngay_Lam']}</td>
+                                        <td>{$row['He_So_Luong']}</td>
                                         <td>
                                             <div style='display:flex;'>
                                                 <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-employee.php?id={$row['Ma_Nhan_Vien']}' style='text-decoration: none;'>Sửa </a></button>

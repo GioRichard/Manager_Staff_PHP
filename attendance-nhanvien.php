@@ -51,8 +51,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./password-nhanvien.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information-nhanvien.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="./login.php">Đăng xuất</a></li>
                     </ul>
                 </li>

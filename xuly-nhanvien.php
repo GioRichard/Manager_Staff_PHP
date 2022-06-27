@@ -11,8 +11,6 @@
     $now = getdate();
     $currentDate = $now["year"]  . "-". $now["mon"]  . "-". $now["mday"];
 
-    //$firstDate = $now["year"]  . "-". $now["mon"] . "-". 1;
-    //$lastDate = $now["year"]  . "-". $now["mon"] . "-". 30  ;
 
     $count_employ = "SELECT Ma_Nhan_Vien FROM `nhan_vien` ";
 
@@ -34,7 +32,7 @@
                                      on diem_danh.Ma_Nhan_Vien = nhan_vien.Ma_Nhan_Vien
                                     where diem_danh.Trang_Thai = 1 
                                     and nhan_vien.Ma_Nhan_Vien = '$Ma_Nhan_Vien'
-                                    and month(Ngay_Diem_Danh) = month($currentDate)
+                                    and month(Ngay_Diem_Danh) = month('$currentDate')
                                     ";
     
     $rsl_snl = mysqli_query($connect,$so_ngay_lam);

@@ -121,7 +121,7 @@
                                         <th>Tên nhân viên</th>
                                         
                                         <th>Vắng mặt</th>
-                                        <th>Đi học</th>
+                                        <th>Đi làm</th>
                                         <th>Ghi chú</th>
                                     </tr>
                                 </thead>

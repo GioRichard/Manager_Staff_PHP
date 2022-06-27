@@ -3,11 +3,15 @@
     session_start();
 
     
-    if(!isset($_SESSION['ten_dang_nhap'])) {
+    if(!isset($_SESSION['username'])) {
         header("location:login.php");
     }
-    $sql = "SELECT * FROM `chuc_vu`";
+
+    $sql =  "SELECT * FROM `khen_thuong_ki_luat`";
+
     $result = mysqli_query($connect,$sql);
+
+
 
 
 ?>
@@ -24,16 +28,17 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
         <style>
-            a {
+             a {
                 text-decoration: none;
                 list-style-type: none;
-                
+               
+            } 
+            button.btn.btn-outline-primary:hover {
+                color:white;
             }
         </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -55,8 +60,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./password-nhanvien.php">Đổi mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="./information-nhanvien.php">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="./password.php">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="./information.php">Thông tin cá nhân</a></li>
                         <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -67,32 +72,35 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="nhanvien.php">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang chủ
                             </a>
-                            
-                            <a class="nav-link" href="./manage-department-nhanvien.php">
+                            <a class="nav-link" href="./manage-account.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Quản lý tài khoản
+                            </a>
+                            <a class="nav-link" href="./manage-department.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý phòng ban
                             </a>
-                            <a class="nav-link" href="./manage-position-nhanvien.php">
+                            <a class="nav-link" href="./manage-position.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý chức vụ
                             </a>
-                            <a class="nav-link" href="./manage-employee-nhanvien.php">
+                            <a class="nav-link" href="./manage-employee.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý nhân viên
                             </a>
-                            <a class="nav-link" href="./manage-bonus-nhanvien.php">
+                            <a class="nav-link" href="./manage-bonus.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý thưởng phạt
                             </a>
-                            <a class="nav-link" href="./salary-nhanvien.php">
+                            <a class="nav-link" href="./salary.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý lương
                             </a>
-                            <a class="nav-link" href="./attendance-nhanvien.php">
+                            <a class="nav-link" href="./attendance.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Điểm danh
                             </a>
@@ -105,62 +113,64 @@
             </div>
             
             <div id="layoutSidenav_content" style="margin-left: 30px;">
-                <h1 class="mt-4" style="text-align: center;">Quản lý chức vụ</h1>
-                
-                <div style="display: flex; justify-content:space-between;margin-right:50px;">
-                        <button style="max-width:100px;"><a href="./create-position.php">Thêm mới</a></button>
-                        <form method="post" action="export.php">
-                                <input type="submit" name="export-depart" class="btn btn-success" value="Export" />
-                        </form>
-                </div>
-                <div class="card-body">
-                    <form action = "" method="get">
-                        <table id="datatablesSimple">
-                            <thead>
-                                <tr>
-                                    <th>Mã chức vụ</th>
-                                    <th>Tên chức vụ</th>
-                                    <th>Hệ số chức vụ</th>
-                                   
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <?php
+                    <h1 class="mt-4" style="text-align: center;">Quản lý KTKL</h1>
+                    <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a style="color:black;"  href="./create-bonus.php">Thêm mới</a></button>
+                        
+                    </div>
+                    
+                    
+                    <div class="card-body">
+                        <form action = "" method="GET">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã KTKL</th>
+                                        <th>Tên KTKL</th>
+                                        <th>Tiền thưởng</th>           
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                               <?php
+                               $count= 0;
                                     while($row = mysqli_fetch_assoc($result)) { 
-                                        $positionID = $row['Ma_Chuc_Vu'];
+                                        $count ++;
+                                        $accountId = $row['Ma_KT_KL'];
                                         echo "<tr>
-                                    
-                                        <td>{$row['Ma_Chuc_Vu']}</td>
-                                        <td>{$row['Ten_Chuc_Vu']}</td>
-                                        <td>{$row['He_So_Chuc_Vu']}</td>
+                                            <td>{$count}</td>
                                         
-                                        
+                                        <td>{$row['Ma_KT_KL']}</td>
+                                        <td>{$row['Ten_KT_KL']}</td>
+                                        <td>{$row['So_Tien']}</td>
                                         <td>
                                             <div style='display:flex;'>
-                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-position.php?id={$row['Ma_Chuc_Vu']}' style='text-decoration: none;'>Sửa </a></button>
-                                                <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $positionID)' style='text-decoration: none; color:red;'>Xóa </a></button>
+                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-bonus.php?id={$row['Ma_KT_KL']}' style='text-decoration: none;'>Sửa </a></button>
+                                                <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $accountId)' style='text-decoration: none; color:red;'>Xóa </a></button>
                                             </div>
                                         </td>
                                     </tr>";
-                                        
+
                                     } 
                                 ?>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
-                <hr>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div style="display: block; text-align: center;">
-                                <a style="text-decoration: none;" href="#">Chính sách bảo mật</a>
-                                <span style="display: block; text-align: center;">Bản quyền bởi công ty DKP</span>
-                        </div>
+                                </tbody>
+                                
+                            </table>
+                        </form>
+                        
                     </div>
-                </footer>
-            </div>
+                    <hr>
+                    <footer class="py-4 bg-light mt-auto">
+                        <div class="container-fluid px-4">
+                            <div style="display: block; text-align: center;">
+                                    <a style="text-decoration: none;" href="#">Chính sách bảo mật</a>
+                                    <span style="display: block; text-align: center;">Bản quyền bởi công ty DKP</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
@@ -170,17 +180,15 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         <script>
-            
             function  getConfirm(aTag, empId) {
-            const conf = confirm('Bạn có muốn xóa chức vụ này không ?');
+                const conf = confirm('Bạn có muốn xóa tài khoản này không ?');
                 if(!conf) {
                     aTag.href = '';
                 } else {
-                    aTag.href = 'delete-department.php?id=' +  empId ;
+                    aTag.href = 'delete-bonus.php?id=' +  empId ;
                 }
                 console.log(aTag);
             }
-            
         </script>
     </body>
 </html>

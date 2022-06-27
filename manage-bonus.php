@@ -109,15 +109,14 @@ if (!isset($_SESSION['username'])) {
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Khen thưởng - Kỷ Luật</h1>
-
-
+                    
+                    <button type="button" class="btn btn-primary"><a href="manage-bonus-home.php" style="color:white; text-decoration: none;">Thay đổi KTKL</a></button>
                     <div class="card-body">
                         <form action="" method="get">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        
-                                        
+
                                         <th>Mã nhân viên</th>
                                         <th>Tên nhân viên</th>
                                         <th>Số ngày làm</th>
@@ -137,16 +136,16 @@ if (!isset($_SESSION['username'])) {
 
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $id = $row['Ma_Nhan_Vien'];
-                                        if( $row['So_Ngay_Lam'] >= 15 && $row['So_Ngay_Lam'] <= 20 ) {
+                                        if( $row['So_Ngay_Lam'] >= 21 ) {
                                             $ktkl = 1;
-                                        }else if($row['So_Ngay_Lam'] > 20 && $row['So_Ngay_Lam'] <= 25 ){
+                                        }else if($row['So_Ngay_Lam'] > 18 && $row['So_Ngay_Lam'] <= 20 ){
                                             $ktkl = 2;
                                         }
-                                        else if($row['So_Ngay_Lam'] > 25 && $row['So_Ngay_Lam'] <= 30 ){
+                                        else if($row['So_Ngay_Lam'] > 15 && $row['So_Ngay_Lam'] <= 18 ){
                                             $ktkl = 3;
                                         }
                                         else {
-                                            $ktkl = 4;
+                                            $ktkl = 6;
                                         }
                                         $sql1 = "UPDATE `nhan_vien` SET `Ma_KT_KL` = '$ktkl' WHERE `nhan_vien`.`Ma_Nhan_Vien` = '$id' ";
                                         $result1 = mysqli_query($connect,$sql1);

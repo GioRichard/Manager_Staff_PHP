@@ -10,15 +10,10 @@
     if(isset($_POST['submitLcb'])) {
         $lcb =  $_POST['lcb'];
 
-        $sql = "UPDATE luong SET Luong_Co_Ban = '$lcb' ";
+        $sql = "UPDATE nhan_vien SET Luong_Co_Ban = '$lcb' ";
         $result = mysqli_query($connect,$sql);
-        //$rowLcb = mysqli_fetch_array($result);
         
     }
-    
-    
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,23 +110,9 @@
 
                 
                 <div class="row">
-                    <!-- <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">
-                                <a href="" style="text-decoration: none; color: white;">Thống kê theo tháng</a> 
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">
-                                <a href="./export.php" style="text-decoration: none; color: white;">Xuất file excel</a>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="card-body">
                         <form action = "" method="get">
-                            <table id="datatablesSimple">
+                        <table id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>Mã nhân viên</th>
@@ -139,6 +120,7 @@
                                         <th>Mã KTKL</th>
                                         <th>Hệ số chức vụ</th>
                                         <th>Số ngày làm</th>
+                                        <th>Hệ số lương</th>
                                         <th>Lương cơ bản</th>
                                         <th>Lương thực tế</th>
                                     </tr>
@@ -156,24 +138,22 @@
                                             $result1 = mysqli_query($connect,$sql1);
                                             $row1 = mysqli_fetch_assoc($result1);
                                             
-                                            $sql2 = "SELECT * FROM luong ";
-                                            $result2 = mysqli_query($connect,$sql2);
-                                            $row2 = mysqli_fetch_assoc($result2);
-
+                                          
                                             $sql3 = "select * from khen_thuong_ki_luat";
                                             $result3 = mysqli_query($connect,$sql3);
-                                            $row3 = mysqli_fetch_assoc($result3);
-
-                                            $salary =$row2['He_so_luong'] * $row2['Luong_Co_Ban'] * $row['So_Ngay_Lam'] * $row1['He_So_Chuc_Vu'] ;
-                                            $salary += $row3['So_Tien'];
-                                            
+                                            $row3 = mysqli_fetch_assoc($result3);                                     
+                                                $salary = ($row['He_So_Luong']+$row1['He_So_Chuc_Vu'] ) * $row['Luong_Co_Ban'] * $row['So_Ngay_Lam'] / 21  ;
+                                                $salary +=$row3['So_Tien'];
+                                                $salary = round($salary,-3);
+                                    
                                             echo "<tr>                                   
                                                 <td>{$row['Ma_Nhan_Vien']}</td>
                                                 <td>{$row['Ten_Nhan_Vien']}</td>
                                                 <td>{$row['Ma_KT_KL']}</td>
                                                 <td>{$row1['He_So_Chuc_Vu']}</td>
                                                 <td>{$row['So_Ngay_Lam']}</td>
-                                                <td>{$row2['Luong_Co_Ban']}</td>
+                                                <td>{$row['He_So_Luong']}</td>
+                                                <td>{$row['Luong_Co_Ban']}</td>
                                                 <td>{$salary}</td>
                                             </tr>";
                                         }

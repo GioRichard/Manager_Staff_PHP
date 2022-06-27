@@ -10,7 +10,7 @@
     if(isset($_POST['submitLcb'])) {
         $lcb =  $_POST['lcb'];
 
-        $sql = "UPDATE luong SET Luong_Co_Ban = '$lcb' ";
+        $sql = "UPDATE nhan_vien SET Luong_Co_Ban = '$lcb' ";
         $result = mysqli_query($connect,$sql);
         
     }
@@ -124,6 +124,7 @@
                                         <th>Mã KTKL</th>
                                         <th>Hệ số chức vụ</th>
                                         <th>Số ngày làm</th>
+                                        <th>Hệ số lương</th>
                                         <th>Lương cơ bản</th>
                                         <th>Lương thực tế</th>
                                     </tr>
@@ -141,15 +142,13 @@
                                             $result1 = mysqli_query($connect,$sql1);
                                             $row1 = mysqli_fetch_assoc($result1);
                                             
-                                            $sql2 = "SELECT * FROM luong ";
-                                            $result2 = mysqli_query($connect,$sql2);
-                                            $row2 = mysqli_fetch_assoc($result2);
-
+                                          
                                             $sql3 = "select * from khen_thuong_ki_luat";
                                             $result3 = mysqli_query($connect,$sql3);
                                             $row3 = mysqli_fetch_assoc($result3);                                     
-                                                $salary =$row2['He_so_luong'] * $row2['Luong_Co_Ban'] * $row['So_Ngay_Lam'] / 30 * $row1['He_So_Chuc_Vu'] ;
-                                                $salary += $row3['So_Tien'];
+                                                $salary = ($row['He_So_Luong']+$row1['He_So_Chuc_Vu'] ) * $row['Luong_Co_Ban'] * $row['So_Ngay_Lam'] / 21  ;
+                                                $salary +=$row3['So_Tien'];
+                                                $salary = round($salary,-3);
                                     
                                             echo "<tr>                                   
                                                 <td>{$row['Ma_Nhan_Vien']}</td>
@@ -157,7 +156,8 @@
                                                 <td>{$row['Ma_KT_KL']}</td>
                                                 <td>{$row1['He_So_Chuc_Vu']}</td>
                                                 <td>{$row['So_Ngay_Lam']}</td>
-                                                <td>{$row2['Luong_Co_Ban']}</td>
+                                                <td>{$row['He_So_Luong']}</td>
+                                                <td>{$row['Luong_Co_Ban']}</td>
                                                 <td>{$salary}</td>
                                             </tr>";
                                         }
