@@ -114,7 +114,12 @@
                 <h1 class="mt-4" style="text-align: center;">Quản lý nhân viên</h1>
 
                 
-                <button style="max-width:100px;"><a href="./create-employee-nhanvien.php">Thêm mới</a></button>
+                <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a href="./create-employee-nhanvien.php">Thêm mới</a></button>
+                        <form method="post" action="export.php">
+                                <input type="submit" name="export-employee-nhanvien" class="btn btn-success" value="Export" />
+                        </form>
+                </div>
 
                 <div class="card-body">
                     <table id="datatablesSimple">

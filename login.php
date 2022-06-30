@@ -22,13 +22,6 @@
                 $usernameErr = "Không được nhập ký tự đặc biệt ";
             }
         }
-        //^: neo vào đầu chuỗi
-        // \S*: bất kỳ bộ ký tự nào
-        // (?=\S{8,}): có độ dài ít nhất 8
-        // (?=\S*[a-z]): chứa ít nhất một chữ cái viết thường
-        // (?=\S*[A-Z]): và ít nhất một chữ cái viết hoa
-        // (?=\S*[\d]): và ít nhất một số
-        // $: neo vào cuối chuỗi
         if(empty($password)) {
             $passwordErr = "Mật không không được để trống ";
         }else {

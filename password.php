@@ -135,9 +135,7 @@
                                             <input type="submit" class="form-control"   name="submit" value="Đổi mật khẩu">
                                         </form>
                                     </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.php">Bạn có tài khoản?Đăng nhập! </a></div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -5,34 +5,12 @@
     = $username =$password = $fullname = $img = "";
 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-         // Xử lí validate form
-        //  $username = $_POST['username'];
-        //  $password = $_POST['password'];
-        //  $fullname = $_POST['fullname'];
-        //  $img = $_POST['fileUpload'];
-        // // username
-        // if(empty($username)) {
-        //     $usernameErr = "Tên đăng nhập không được bỏ trống !";
-            
-        // }else{
-        //     $username = test($username);
-        //     if(!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-        //         $usernameErr = "Tên đăng nhập gồm chữ và số ";
-        //     }
-        // }
-
-        // Upload file
-        
-        // echo "<pre>";
-        // print_r($_FILES);
-        // echo "</pre>";
 
         $error = "";
+        // Tạo đường dẫn thư mục
         $target_dir = "uploads/";
         // Tạo đường dẫn file sau khi uploads
         $target_file = $target_dir.basename($_FILES['fileUpload']['name']);
-        //echo $target_file;
-
         // Kiểm tra điều kiện uploads 
         //1. Kiểm tra kích thước file 
 
@@ -41,16 +19,23 @@
         }
         //2. kiểm tra loại file
         $file_type = pathinfo($_FILES['fileUpload']['name'], PATHINFO_EXTENSION);
-        //echo $file_type;
-       
         $file_type_allow = array('png','jpeg','jpg','pdf','gif');
 
         if(!in_array( strtolower($file_type), $file_type_allow)) {
             $error['fileUpload'] = "Chỉ cho phép upload file ảnh";
         }
-        
+        else
+        {
+            echo "Có lỗi xảy ra khi upload file.";
+        }
+        if (move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $target_file))
+        {
+            echo "File ". basename( $_FILES["fileUpload"]["name"]).
+            " Đã upload thành công.";
 
+            echo "File lưu tại " . $target_file;
 
+        }
 
     }
     if(isset($_POST['submit'])) {
@@ -74,7 +59,7 @@
 
             $result = mysqli_query($connect, $sql);
     
-            header("Location:manage-account.php");
+            header("Location:index.php");
         }
  
         
@@ -116,7 +101,7 @@
 </head>
 <body>
     <h2 class="mt-4">Thêm mới tài khoản</h2>
-    <form id="form-upload" action=" <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
+    <form id="form-upload" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
             <input type="text" class="form-control" name="username" placeholder=""  >

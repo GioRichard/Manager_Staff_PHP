@@ -35,7 +35,7 @@
 </head>
 <body>
     <h2 class="mt-4">Thêm mới tài khoản</h2>
-    <form action="" method="post" enctype="multipart/form">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
             <input type="text" class="form-control" name="username" placeholder="" value="<?php echo $row['ten_dang_nhap']; ?>">
@@ -63,14 +63,23 @@
 </html>
 
 <?php
+    
     if(isset($_POST['submit'])) {
         $id = $_GET['id'];
         $username = $_POST['username'];
         $password = $_POST['password'];
         $fullname = $_POST['fullname'];
-        $img = $_POST['fileUpload'];
-
+        $img = $_FILES['fileUpload']['name'];
+        
+        $file = $_FILES['fileUpload']['tmp_name'];
+        $path = "uploads/".$_FILES['fileUpload']['name'];
+        if(move_uploaded_file($file, $path)){
+            echo "Tải tập tin thành công";
+        }else{
+            echo "Tải tập tin thất bại";
+        }
         $sql = "UPDATE `tai_khoan` SET  `ten_dang_nhap` = ' $username',`mat_khau` = '$password', `ten_nguoi_dung` = ' $fullname', `anh_dai_dien` = '$img' WHERE `tai_khoan`.`id` = $id";
+        
         
         $result = mysqli_query($connect,$sql);
         

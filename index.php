@@ -6,6 +6,9 @@
     if(!isset($_SESSION['username'])) {
         header("location:login.php");
     }
+    $sql =  "SELECT * FROM `tai_khoan`";
+
+    $result = mysqli_query($connect,$sql);
 
     $sql_account = "SELECT id FROM `tai_khoan`  ";
     $result_account = mysqli_query($connect,$sql_account);
@@ -26,8 +29,6 @@
     $result_position = mysqli_query($connect,$sql_position);
 
     $dem_position = mysqli_num_rows($result_position); 
-
-
 
 ?>
 
@@ -87,36 +88,11 @@
                         <div class="nav">
                             <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Trang chủ
+                                Quản lí tài khoản
                             </a>
-                            <a class="nav-link" href="./manage-account.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý tài khoản
-                            </a>
-                            <a class="nav-link" href="./manage-department.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý phòng ban
-                            </a>
-                            <a class="nav-link" href="./manage-position.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý chức vụ
-                            </a>
-                            <a class="nav-link" href="./manage-employee.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý nhân viên
-                            </a>
-                            <a class="nav-link" href="./manage-bonus.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý thưởng phạt
-                            </a>
-                            <a class="nav-link" href="./salary.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý lương
-                            </a>
-                            <a class="nav-link" href="./attendance.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Điểm danh
-                            </a>
+                            
+                           
+                            
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -127,55 +103,62 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Trang chủ</h1>
-                        
+                        <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Quản lí tài khoản</h1>
+                        <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a  style="color:black;text-decoration:none;"  href="./create-account.php">Thêm mới</a></button>
+                        <form method="post" action="export.php">
+                                <input type="submit" name="export" class="btn btn-success" value="Export" />
+                        </form>
+                    </div>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div  class="card-body" >Người dùng</div>
-                                    <div class="num-account" ><?php echo $dem_account; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-account.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Chức vụ</div>
-                                    <div class="num-account" ><?php echo $dem_position; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-position.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Phòng ban</div>
-                                    <div class="num-account" ><?php echo $dem_depart; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-department.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Nhân viên</div>
-                                    <div class="num-account" ><?php echo $dem_employ; ?></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="./manage-employee.php">Chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                            
+                           
                           
                             
                         </div>
                         <div class="card-body">
-                    
-                </div>
+                        <form action = "" method="GET">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Số thứ tự</th>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Mật khẩu</th>
+                                        <th>Tên người dùng</th>
+                                        <th>Ảnh đại diện</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                               <?php
+                               $count= 0;
+                                    while($row = mysqli_fetch_assoc($result)) { 
+                                        $count ++;
+                                        $accountId = $row['id'];
+                                        echo "<tr>
+                                            <td>{$count}</td>
+                                        
+                                        <td>{$row['ten_dang_nhap']}</td>
+                                        <td>{$row['mat_khau']}</td>
+                                        <td>{$row['ten_nguoi_dung']}</td>
+                                        <td><img src='uploads/{$row['anh_dai_dien']}' style='width:100px; height:100px;'></td>
+                                        
+                                        <td>
+                                            <div style='display:flex;'>
+                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-account.php?id={$row['id']}' style='text-decoration: none;'>Sửa </a></button>
+                                                <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $accountId)' style='text-decoration: none; color:red;'>Xóa </a></button>
+                                            </div>
+                                        </td>
+                                    </tr>";
+
+                                    } 
+                                ?>
+                                </tbody>
+                                
+                            </table>
+                        </form>
+                        
+                    </div>
                         
                     </div>
                 </main>
@@ -196,5 +179,16 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            function  getConfirm(aTag, empId) {
+                const conf = confirm('Bạn có muốn xóa tài khoản này không ?');
+                if(!conf) {
+                    aTag.href = '';
+                } else {
+                    aTag.href = 'delete-account.php?id=' +  empId ;
+                }
+                console.log(aTag);
+            }
+        </script>
     </body>
 </html>

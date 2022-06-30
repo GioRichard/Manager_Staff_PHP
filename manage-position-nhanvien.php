@@ -108,9 +108,9 @@
                 <h1 class="mt-4" style="text-align: center;">Quản lý chức vụ</h1>
                 
                 <div style="display: flex; justify-content:space-between;margin-right:50px;">
-                        <button style="max-width:100px;"><a href="./create-position.php">Thêm mới</a></button>
+                        <button style="max-width:100px;"><a href="./create-position-nhanvien.php">Thêm mới</a></button>
                         <form method="post" action="export.php">
-                                <input type="submit" name="export-depart" class="btn btn-success" value="Export" />
+                                <input type="submit" name="export-position-nhanvien" class="btn btn-success" value="Export" />
                         </form>
                 </div>
                 <div class="card-body">
@@ -139,7 +139,7 @@
                                         
                                         <td>
                                             <div style='display:flex;'>
-                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-position.php?id={$row['Ma_Chuc_Vu']}' style='text-decoration: none;'>Sửa </a></button>
+                                                <button style='margin-right:10px;' type='button' class='btn btn-outline-primary' > <a href='update-position-nhanvien.php?id={$row['Ma_Chuc_Vu']}' style='text-decoration: none;'>Sửa </a></button>
                                                 <button type='button' class='btn btn-outline-danger'><a onclick='getConfirm(this, $positionID)' style='text-decoration: none; color:red;'>Xóa </a></button>
                                             </div>
                                         </td>
@@ -176,7 +176,7 @@
                 if(!conf) {
                     aTag.href = '';
                 } else {
-                    aTag.href = 'delete-department.php?id=' +  empId ;
+                    aTag.href = 'delete-position-nhanvien.php?id=' +  empId ;
                 }
                 console.log(aTag);
             }

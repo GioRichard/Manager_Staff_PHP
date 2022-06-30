@@ -74,36 +74,10 @@
                         <div class="nav">
                             <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Trang chủ
-                            </a>
-                            <a class="nav-link" href="./manage-account.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Quản lý tài khoản
                             </a>
-                            <a class="nav-link" href="./manage-department.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý phòng ban
-                            </a>
-                            <a class="nav-link" href="./manage-position.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý chức vụ
-                            </a>
-                            <a class="nav-link" href="./manage-employee.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý nhân viên
-                            </a>
-                            <a class="nav-link" href="./manage-bonus.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý thưởng phạt
-                            </a>
-                            <a class="nav-link" href="./salary.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Quản lý lương
-                            </a>
-                            <a class="nav-link" href="./attendance.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Điểm danh
-                            </a>
+                            
+                            
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

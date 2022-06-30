@@ -68,5 +68,3 @@
         header("Location:manage-bonus-home.php");
 
     }
-
-?>

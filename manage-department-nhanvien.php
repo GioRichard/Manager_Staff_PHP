@@ -109,7 +109,12 @@
             
             <div id="layoutSidenav_content" style="margin-left: 30px;">
                 <h1 class="mt-4" style="text-align: center;">Quản lý phòng ban</h1>
-                <button style="max-width:100px;"><a href="./create-department-nhanvien.php">Thêm mới</a></button>
+                <div style="display: flex; justify-content:space-between;margin-right:50px;">
+                        <button style="max-width:100px;"><a href="./create-department-nhanvien.php">Thêm mới</a></button>
+                        <form method="post" action="export.php">
+                                <input type="submit" name="export-depart-nhanvien" class="btn btn-success" value="Export" />
+                        </form>
+                </div>
                 <div class="card-body">
                     <form action = "" method="get">
                         <table id="datatablesSimple">

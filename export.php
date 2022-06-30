@@ -15,8 +15,7 @@
                                             <th>Mật khẩu</th>  
                                             <th>Tên người dùng</th> 
                                             <th>Ảnh đại diện</th> 
-                                            
-                        
+
                                         </tr>
                 ';
                 while($row = mysqli_fetch_array($result)) {
@@ -37,7 +36,7 @@
             echo $output;
         }
     }
-    if(isset($_POST["export-depart"])) {
+    if(isset($_POST["export-depart-nhanvien"])) {
         $sql = "SELECT * FROM phong_ban ORDER By Ma_phong_Ban ASC";
         $result = mysqli_query($connect,$sql);
 
@@ -72,7 +71,38 @@
             echo $output;
         }
     }
-    if(isset($_POST["export-employee"])) {
+    if(isset($_POST["export-position-nhanvien"])) {
+        $sql = "SELECT * FROM chuc_vu ORDER By Ma_Chuc_Vu ASC";
+        $result = mysqli_query($connect,$sql);
+
+        if(mysqli_num_rows($result) > 0) {
+                $output .= '
+                    <table class="table" bordered="1">  
+                                        <tr>  
+                                            <th>Mã chức vụ</th>  
+                                            <th>Tên chức vụ</th>  
+                                            <th>Hệ số chức vụ</th>   
+ 
+                        
+                                        </tr>
+                ';
+                while($row = mysqli_fetch_array($result)) {
+                    $output .= '
+                    <table class="table" bordered="1">  
+                                        <tr>  "
+                                            <td>'.$row["Ma_Chuc_Vu"].'</td>  
+                                            <td>'.$row["Ten_Chuc_Vu"].'</td>
+                                            <td>'.$row["He_So_Chuc_Vu"].'</td>  
+                                        </tr>
+                    ';
+                }
+            $output .= '</table>';
+            header('Content-Type: application/xls');
+            header('Content-Disposition: attachment; filename=export-position.xls');
+            echo $output;
+        }
+    }
+    if(isset($_POST["export-employee-nhanvien"])) {
         $sql = "SELECT * FROM nhan_vien ORDER By Ma_Nhan_Vien ASC";
         $result = mysqli_query($connect,$sql);
 
@@ -89,8 +119,8 @@
                                             <th>Giới Tính</th> 
                                             <th>Mã Chức Vụ</th> 
                                             <th>Mã Phòng Ban</th> 
+                                            <th>Số ngày làm</th> 
                                             <th>Lương cơ bản</th> 
-                                            
                         
                                         </tr>
                 ';
@@ -107,7 +137,8 @@
                                             <td>'.$row["Gioi_Tinh"].'</td>
                                             <td>'.$row["Ma_Chuc_Vu"].'</td>
                                             <td>'.$row["Ma_Phong_Ban"].'</td>
-                                            <td>'.$row["Luong_co_ban"].'</td>
+                                            <td>'.$row["So_Ngay_Lam"].'</td>
+                                            <td>'.$row["Luong_Co_Ban"].'</td>
                                         </tr>
                     ';
                 }

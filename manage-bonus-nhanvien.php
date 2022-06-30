@@ -107,7 +107,7 @@ if (!isset($_SESSION['ten_dang_nhap'])) {
                 <div class="container-fluid px-4">
                     <h1 class="mt-4" style="text-align: center; margin-bottom: 30px;">Khen thưởng - Kỷ Luật</h1>
 
-
+                    <button type="button" class="btn btn-primary"><a href="manage-bonus-home.php" style="color:white; text-decoration: none;">Thay đổi KTKL</a></button>
                     <div class="card-body">
                         <form action="" method="get">
                             <table id="datatablesSimple">
@@ -124,26 +124,20 @@ if (!isset($_SESSION['ten_dang_nhap'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-
-                                    
-
                                     $sql  = " SELECT * FROM nhan_vien";
                                     $result = mysqli_query($connect, $sql);
-                                    
-
-
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $id = $row['Ma_Nhan_Vien'];
-                                        if( $row['So_Ngay_Lam'] >= 15 && $row['So_Ngay_Lam'] <= 20 ) {
-                                            $ktkl = 1;
-                                        }else if($row['So_Ngay_Lam'] > 20 && $row['So_Ngay_Lam'] <= 25 ){
-                                            $ktkl = 2;
+                                        if( $row['So_Ngay_Lam'] >= 21 ) {
+                                            $ktkl = 1; // 200 000
+                                        }else if($row['So_Ngay_Lam'] < 21 && $row['So_Ngay_Lam'] >= 18 ){
+                                            $ktkl = 2; // 100 000
                                         }
-                                        else if($row['So_Ngay_Lam'] > 25 && $row['So_Ngay_Lam'] <= 30 ){
-                                            $ktkl = 3;
+                                        else if($row['So_Ngay_Lam'] >= 15 && $row['So_Ngay_Lam'] < 18 ){
+                                            $ktkl = 3; // 0
                                         }
                                         else {
-                                            $ktkl = 4;
+                                            $ktkl = 6; // -20000
                                         }
                                         $sql1 = "UPDATE `nhan_vien` SET `Ma_KT_KL` = '$ktkl' WHERE `nhan_vien`.`Ma_Nhan_Vien` = '$id' ";
                                         $result1 = mysqli_query($connect,$sql1);
@@ -153,12 +147,9 @@ if (!isset($_SESSION['ten_dang_nhap'])) {
                                             <td><?php echo $row['Ma_Nhan_Vien'];  ?></td>
                                             <td><?php echo $row['Ten_Nhan_Vien'];  ?></td>
                                             <td><?php echo $row['So_Ngay_Lam'];  ?></td>
-                                            <td><?php echo $ktkl;  ?></td>
-                                             
-                                            
+                                            <td><?php echo $ktkl;  ?></td>                        
                                         </tr>
-                                    <?php
-                                        
+                                    <?php                        
                                     }
                                     
                                     ?>

@@ -1,19 +1,12 @@
 <?php
     require_once 'config.php';
-    session_start();
-
-    
+    session_start();  
     if(!isset($_SESSION['ten_dang_nhap'])) {
         header("location:login.php");
     }
-    
-
-
     $now = getdate();
-
-    
-    $currentDate = $now["mday"]  . "-". $now["mon"] . "-". $now["year"];
-       
+  
+    $currentDate = $now["mday"]  . "-". $now["mon"] . "-". $now["year"]; 
 
 ?>
 <!DOCTYPE html>
@@ -101,11 +94,7 @@
             </div>
             
             <div id="layoutSidenav_content">
-                <h1 class="mt-4" style="text-align:center;margin-bottom: 30px">Điểm danh ngày <?php echo $currentDate; ?></h1> </h1> </h1>
-                
-                    
-                    
-                
+                <h1 class="mt-4" style="text-align:center;margin-bottom: 30px">Điểm danh ngày <?php echo $currentDate; ?></h1> </h1> </h1>  
                 <div class="row">
                     
                     <div class="card-body">
@@ -130,8 +119,6 @@
                                         $stt = 0;
                                         while($row = mysqli_fetch_assoc($result)) {
                                             $stt++;
-                                        
-
                                     ?>
                                    <tr>
                                        <td><?php echo $stt; ?></td>
@@ -183,11 +170,3 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
-
-
-<?php
-
-    
-    
-
-?>

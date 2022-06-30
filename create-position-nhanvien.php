@@ -1,13 +1,20 @@
 <?php
     require_once 'config.php';
 
-    $id = $_GET['id'];
-    
-    $sql = "SELECT * FROM `chuc_vu` where Ma_Chuc_Vu = $id";
-    
-    $result =mysqli_query($connect,$sql);
+   
+    $tenPhongBanErr =  $maTruongPhongErr = $phoneErr = "";
 
-    $row = mysqli_fetch_assoc($result);
+
+    if(isset($_POST['submit'])) {
+        $ten_chuc_vu = $_POST['ten_chuc_vu'];
+        $he_so_chuc_vu = $_POST['he_so_chuc_vu'];
+        
+        $sql = "INSERT INTO `chuc_vu` (`Ma_Chuc_Vu`, `Ten_Chuc_Vu`, `He_So_Chuc_Vu`) VALUES (NULL, '$ten_chuc_vu', '$he_so_chuc_vu')";
+
+        $result = mysqli_query($connect, $sql);
+        header("Location:manage-position-nhanvien.php");
+    }
+    
 
 ?>
 
@@ -32,17 +39,17 @@
     </style>
 </head>
 <body>
-    <h2 class="mt-4">Cập nhật chức vụ</h2>
+    <h2 class="mt-4">Thêm mới chức vụ</h2>
     <form action="" method="post" enctype="multipart/form">
         
         <div class="mb-3">
             <label for="ten_chuc_vu" class="form-label">Tên chức vụ</label>
-            <input type="text" class="form-control" name="ten_chuc_vu" value="<?php echo $row['Ten_Chuc_Vu'];  ?>" >
+            <input type="text" class="form-control" name="ten_chuc_vu"  >
             
         </div>
         <div class="mb-3">
             <label for="he_so_chuc_vu" class="form-label">Hệ số chức vụ</label>
-            <input type="text" class="form-control"   name="he_so_chuc_vu" placeholder=""  value="<?php echo $row['He_So_Chuc_Vu'];  ?>">
+            <input type="text" class="form-control"   name="he_so_chuc_vu" placeholder="" >
             
         </div>
         
@@ -51,22 +58,3 @@
     </form>
 </body>
 </html>
-
-<?php
-    if(isset($_POST['submit'])) {
-        $id = $_GET['id'];
-
-        $ten_chuc_vu = $_POST['ten_chuc_vu'];
-        $he_so_chuc_vu = $_POST['he_so_chuc_vu'];
-        
-        $sql = "UPDATE `chuc_vu` SET `Ten_Chuc_Vu` = '$ten_chuc_vu', `He_So_Chuc_Vu` = '$he_so_chuc_vu' 
-        WHERE `chuc_vu`.`Ma_Chuc_Vu` = '$id'";
-
-        
-        $result = mysqli_query($connect,$sql);
-        
-        header("Location:manage-position.php");
-
-    }
-
-?>

@@ -10,7 +10,7 @@
     
 
     if($result) {
-        header("location:manage-account.php");
+        header("location:index.php");
 
     }else{ 
         echo "Lỗi khi xóa phần tử ".$id; 
